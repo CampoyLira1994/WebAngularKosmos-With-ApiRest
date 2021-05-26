@@ -1,0 +1,45 @@
+<form #form="ngForm" (submit)="onSubmit(form)">
+<input type="hidden" name="EmployeeID" #EmployeeID="ngModel" [(ngModel)]="service.formData.EmployeeID">
+<div class="form-group">
+<label>FULL NAME</label>
+<input name="Fullname" #Fullname="ngModel" [(ngModel)]="service.formData.Fullname" class="form-control" required>
+<div class="validation-error" *ngIf="Fullname.invalid && Fullname.touched">This field is required.</div>
+</div>
+<div class="form-group">
+  <label>POSITION</label>
+  <input name="Position" #Position="ngModel" [(ngModel)]="service.formData.Position" class="form-control">
+  </div>
+
+<div class="form-row">
+<div class="form-group col-md-6">
+  <label>EMP CODE</label>
+  <input name="EmpCode" #EmpCode="ngModel" [(ngModel)]="service.formData.EmpCode" class="form-control">
+</div>
+<div class="form-group col-md-6">
+  <label>MOBILE</label>
+  <input name="Mobile" #Mobile="ngModel" [(ngModel)]="service.formData.Mobile" class="form-control">
+</div>
+
+</div>
+<br>
+<div class="form-group">
+  <button  type="submit" [disabled]="form.invalid" class="btn btn-success">SUBMIT</button>
+</div>
+</form>
+
+
+<br><br><br>
+
+<!-- <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 5">
+  <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <img src="..." class="rounded me-2" alt="...">
+      <strong class="me-auto">Bootstrap</strong>
+      <small>11 mins ago</small>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+      Hello, world! This is a toast message.
+    </div>
+  </div>
+</div> -->
