@@ -2,10 +2,12 @@
   <head> </head>
   <body>
 
-    <app-navbar></app-navbar>
-    <app-login></app-login>
-    <!-- <app-employees></app-employees> -->
-    <router-outlet></router-outlet>
+    <app-navbar *ngIf="accsesHome"></app-navbar>
+    <app-login *ngIf="accesLogin" (loginP)="changeComponentLogin($event)"></app-login>
+    <!-- <app-body *ngIf="accsesHome"></app-body> -->
+    <!-- <app-employees *ngIf="accsesHome"></app-employees> -->
+    <router-outlet *ngIf="accsesHome"></router-outlet>
+
   </body>
   <footer>
     <!-- <app-footer></app-footer> -->

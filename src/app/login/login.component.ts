@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { EmployeesService } from '../shared/services/employees.service/employees.service';
 import { Employees } from '../shared/models/employees.model';
+
 
 @Component({
   selector: 'app-login',
@@ -11,10 +12,21 @@ export class LoginComponent implements OnInit {
 
   username: string;
   password: string;
-  userFind: number;
+  access: number;
 
   employees: Employees[];
   lengthEmpleados: number;
+
+    @Output() usuarioSeleccionado = new EventEmitter();
+    @Output() loginP: EventEmitter<number> = new EventEmitter<number>();
+
+
+    // tslint:disable-next-line: typedef
+    changeComponentLogin(login: number) {
+      // this.usuarioSeleccionado.emit(login);
+      this.loginP.emit(login);
+    }
+
 
   constructor(private service: EmployeesService) { }
   // tslint:disable-next-line: typedef
@@ -31,15 +43,15 @@ export class LoginComponent implements OnInit {
         const empleado = employees_1[i];
         console.log(empleado.name);
         if (this.username === empleado.name && this.password === empleado.password){
-          this.userFind = empleado.idEmployee;
           console.log('Encontrado ');
+          this.changeComponentLogin(0);
         }else{
-          console.log('Error en Usuaior o Contraseña');
+          console.log('Error usuario no encontrado');
         }
       }
     });
-  }
 
+  }
 
 
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +7,17 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'kosmosTest';
+  accesLogin = 0;
+  accsesHome = 1;
+
+  @Input() usuarioSeleccionado = new EventEmitter();
+
+  // tslint:disable-next-line: typedef
+  changeComponentLogin(login: number) {
+  this.accesLogin = login;
+  if (this.accesLogin === 0){
+    this.accsesHome = 1;
+  }
+ }
+
 }

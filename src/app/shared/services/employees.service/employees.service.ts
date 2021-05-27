@@ -23,4 +23,20 @@ export class EmployeesService {
     return this.http.get(this.rootURL + '/Employees1');
   }
 
+  getUsersId(id): Observable<any> {
+    return this.http.get(this.rootURL + '/Employees1/' + id);
+  }
+
+  createEmpoyee(employees: any): Observable<any>{
+    return this.http.post(this.rootURL + '/Employees1', employees);
+  }
+
+  editEmployee(employees: Employees): Observable<any>{
+    return this.http.put(this.rootURL + '/Employees1/' + employees.idEmployee, employees);
+  }
+
+  deleteEmpoyee(id): Observable<any>{
+    return this.http.delete(this.rootURL + '/Employees1/' + id);
+  }
+
 }
