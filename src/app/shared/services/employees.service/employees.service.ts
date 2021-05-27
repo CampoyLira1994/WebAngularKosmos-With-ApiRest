@@ -11,8 +11,6 @@ import { Employees } from '../../models/employees.model';
 export class EmployeesService {
 
   constructor(private http: HttpClient) { }
-  // formData: Employees;
-  listEmployees: Employees[];
 
   readonly rootURL = 'https://localhost:44301/api';
 
