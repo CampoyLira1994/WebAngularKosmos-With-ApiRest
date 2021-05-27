@@ -10,20 +10,18 @@ import { Employees } from '../../models/employees.model';
 })
 export class EmployeesService {
 
+  constructor(private http: HttpClient) { }
   // formData: Employees;
   listEmployees: Employees[];
 
   readonly rootURL = 'https://localhost:44301/api';
-
-
-  constructor(private http: HttpClient) { }
 
   // tslint:disable-next-line: typedef
   getUsers(): Observable<any> {
     return this.http.get(this.rootURL + '/Employees1');
   }
 
-  getUsersId(id): Observable<any> {
+  getEmployeeId(id): Observable<any> {
     return this.http.get(this.rootURL + '/Employees1/' + id);
   }
 

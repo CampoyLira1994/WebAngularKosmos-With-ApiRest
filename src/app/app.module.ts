@@ -13,11 +13,15 @@ import { EmployeesComponent } from './employees/employees.component';
 import { EmployeeComponent } from './employees/employee/employee.component';
 import { EmployeeListComponent } from './employees/employee-list/employee-list.component';
 import { LoginComponent } from './login/login.component';
+import { AdminComponent } from './admin/admin.component';
+import { CoverPageComponent } from './cover-page/cover-page.component';
+import { EmployeeAdminComponent } from './admin/employee-admin/employee-admin.component';
+import { RecordAdminComponent } from './admin/record-admin/record-admin.component';
 
 import { EmployeeService } from './shared/employee.service';
 import { EmployeesService } from '../app/shared/services/employees.service/employees.service';
-import { AdminComponent } from './admin/admin.component';
-import { CoverPageComponent } from './cover-page/cover-page.component';
+
+
 
 @NgModule({
   declarations: [
@@ -29,7 +33,10 @@ import { CoverPageComponent } from './cover-page/cover-page.component';
     EmployeeListComponent,
     LoginComponent,
     AdminComponent,
-    CoverPageComponent
+    CoverPageComponent,
+    EmployeeAdminComponent,
+    RecordAdminComponent
+
   ],
   imports: [
     BrowserModule,
