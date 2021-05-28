@@ -21,6 +21,7 @@ import { RecordAdminComponent } from './admin/record-admin/record-admin.componen
 import { EmployeeService } from './shared/employee.service';
 import { EmployeesService } from '../app/shared/services/employees.service/employees.service';
 import { ServiceAdminComponent } from './admin/service-admin/service-admin.component';
+import { StatusAdminComponent } from './admin/status-admin/status-admin.component';
 
 
 
@@ -37,7 +38,8 @@ import { ServiceAdminComponent } from './admin/service-admin/service-admin.compo
     CoverPageComponent,
     EmployeeAdminComponent,
     RecordAdminComponent,
-    ServiceAdminComponent
+    ServiceAdminComponent,
+    StatusAdminComponent
 
   ],
   imports: [
