@@ -13,7 +13,7 @@ export class RecordAdminComponent implements OnInit {
 
   constructor(private service: RecordsService) { }
 
-  reecords: Records[];
+  records: Records[];
 
   ngOnInit(): void {
     this.service.getRecords().subscribe((data) => {
