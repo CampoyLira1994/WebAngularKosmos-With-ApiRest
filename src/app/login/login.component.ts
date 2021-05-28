@@ -10,6 +10,8 @@ import { Employees } from '../shared/models/employees.model';
 })
 export class LoginComponent implements OnInit {
 
+  constructor(private service: EmployeesService) { }
+
   username: string;
   password: string;
   access: number;
@@ -27,8 +29,6 @@ export class LoginComponent implements OnInit {
       this.loginP.emit(login);
     }
 
-
-  constructor(private service: EmployeesService) { }
   // tslint:disable-next-line: typedef
   ngOnInit() {
 

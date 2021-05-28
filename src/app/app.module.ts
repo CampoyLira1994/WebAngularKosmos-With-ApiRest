@@ -22,6 +22,8 @@ import { EmployeeService } from './shared/employee.service';
 import { EmployeesService } from '../app/shared/services/employees.service/employees.service';
 import { ServiceAdminComponent } from './admin/service-admin/service-admin.component';
 import { StatusAdminComponent } from './admin/status-admin/status-admin.component';
+import { FoodServiceComponent } from './food-service/food-service.component';
+import { PantryServiceComponent } from './food-service/pantry-service/pantry-service.component';
 
 
 
@@ -39,7 +41,9 @@ import { StatusAdminComponent } from './admin/status-admin/status-admin.componen
     EmployeeAdminComponent,
     RecordAdminComponent,
     ServiceAdminComponent,
-    StatusAdminComponent
+    StatusAdminComponent,
+    FoodServiceComponent,
+    PantryServiceComponent
 
   ],
   imports: [
