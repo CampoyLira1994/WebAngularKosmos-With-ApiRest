@@ -24,7 +24,7 @@ import { ServiceAdminComponent } from './admin/service-admin/service-admin.compo
 import { StatusAdminComponent } from './admin/status-admin/status-admin.component';
 import { FoodServiceComponent } from './food-service/food-service.component';
 import { PantryServiceComponent } from './food-service/pantry-service/pantry-service.component';
-
+import { TypeUserAdminComponent} from './admin/type-user.admin/typeuser-admin.component';
 
 
 @NgModule({
@@ -43,7 +43,8 @@ import { PantryServiceComponent } from './food-service/pantry-service/pantry-ser
     ServiceAdminComponent,
     StatusAdminComponent,
     FoodServiceComponent,
-    PantryServiceComponent
+    PantryServiceComponent,
+    TypeUserAdminComponent
 
   ],
   imports: [

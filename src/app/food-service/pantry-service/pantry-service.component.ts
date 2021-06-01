@@ -4,6 +4,8 @@ import { EmployeesService } from './../../shared/services/employees.service/empl
 
 import { Employees } from './../../shared/models/employees.model';
 
+declare var $: any;
+
 @Component({
   selector: 'app-pantry-service',
   templateUrl: './pantry-service.component.html',
@@ -16,9 +18,21 @@ export class PantryServiceComponent implements OnInit {
   idEmployee: number;
   Employee: Employees;
 
-  mostrar: boolean;
-
   ngOnInit(): void {
+
+    // tslint:disable-next-line: only-arrow-functions
+    $('.showtoast').click(function(){
+      $('.toast').toast('show');
+      });
+
+    // tslint:disable-next-line: only-arrow-functions
+    $('.closetoast').click(function(){
+        $('.toast').toast('close');
+        });
+
+
+
+
   }
 
   // tslint:disable-next-line: typedef
@@ -26,9 +40,15 @@ export class PantryServiceComponent implements OnInit {
   this.serviceEmployee.getEmployeeId(Employee).subscribe((data) => {
   this.Employee = data;
   console.log(data);
-  this.mostrar = true;
   });
 
+  $('.toast').toast('show');
+  }
+
+  // tslint:disable-next-line: typedef
+  cerrartoast(){
+    console.log('cerrar');
+    $('.toast').toast('dispose');
   }
 
 }

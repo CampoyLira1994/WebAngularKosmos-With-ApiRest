@@ -1,32 +1,22 @@
 
+
+
+
 <div class="container">
-
-
-<!-- Flexbox container for aligning the toasts -->
-<div *ngIf="mostrar"  aria-live="polite" aria-atomic="true" class="d-flex justify-content-center align-items-center w-100">
-
-  <!-- Then put toasts within -->
-  <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-    <div class="toast-header">
-      <img src="..." class="rounded me-2" alt="...">
-      <strong class="me-auto">Bootstrap</strong>
-      <small>11 mins ago</small>
-      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-    </div>
-    <div class="toast-body">
-      Hello, world! This is a toast message.
-    </div>
-  </div>
-</div>
-
   <br>
+
+
   <div class="card">
+
+
+
+
+
     <h3 class="card-header" style="text-align: center;">
       Despensas</h3>
     <div class="card-body" align="center">
-      <br/><br/><br/><br/>
       <img src="../../../assets/Identidad-corporativa-Kosmos-1024x419.png" width="70%" >
-      <br/><br/><br/>
+      <br/>
       <div class="input-group input-group-lg">
         <span class="input-group-text" id="inputGroup-sizing-lg">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-people" viewBox="0 0 16 16">
@@ -34,25 +24,53 @@
           </svg>
         </span>
         <input (change)="checkEmployee(idEmployee)" type="text" [(ngModel)]="idEmployee" placeholder="idEmployee" name="idEmployee" id="idEmployee" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+
       </div>
-      <br/><br/>
 
 
-      <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="toast-header">
-          <img src="..." class="rounded me-2" alt="...">
-          <strong class="me-auto">Bootstrap</strong>
-          <small>11 mins ago</small>
-          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-        </div>
-        <div class="toast-body">
-          Hello, world! This is a toast message.
-        </div>
-      </div>
 
     </div>
-  </div>
-  </div>
-  <br>
-  <hr>
 
+  </div>
+  </div>
+
+
+  <div aria-live="polite" aria-atomic="true" >
+    <div class="toast" data-delay="3000" style="position: absolute; top: 0; right: 0;" >
+      <div class="toast-header" >
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-all" viewBox="0 0 16 16">
+          <path d="M8.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"/>
+        </svg>
+        <strong class="mr-auto">Encontrado </strong>
+        <small> En este momento</small>
+        <button type="button" (click)="cerrartoast()" >
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-octagon-fill" viewBox="0 0 16 16">
+            <path d="M11.46.146A.5.5 0 0 0 11.107 0H4.893a.5.5 0 0 0-.353.146L.146 4.54A.5.5 0 0 0 0 4.893v6.214a.5.5 0 0 0 .146.353l4.394 4.394a.5.5 0 0 0 .353.146h6.214a.5.5 0 0 0 .353-.146l4.394-4.394a.5.5 0 0 0 .146-.353V4.893a.5.5 0 0 0-.146-.353L11.46.146zm-6.106 4.5L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708z"/>
+          </svg>
+        </button>
+      </div>
+      <div class="toast-body" >
+        {{this.Employee.name}} encontrado con exito.
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong>Holy guacamole!</strong> You should check in on some of those fields below.
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+
+  <div class="alert alert-success" role="alert">
+    <h4 class="alert-heading">Well done!</h4>
+    <p>Aww yeah, you successfully read this important alert message. This example text is going to run a bit longer so that you can see how spacing within an alert works with this kind of content.</p>
+    <hr>
+    <p class="mb-0">Whenever you need to, be sure to use margin utilities to keep things nice and tidy.</p>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div> -->
