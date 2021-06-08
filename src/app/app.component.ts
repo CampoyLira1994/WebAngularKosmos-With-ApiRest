@@ -8,15 +8,23 @@ import { Component, EventEmitter, Input } from '@angular/core';
 export class AppComponent {
   title = 'kosmosTest';
   accesLogin = 0;
-  accsesHome = 1;
+  LocalaccesLogin: string;
+
+  miNombre = localStorage.getItem('nombre');
+
 
   @Input() usuarioSeleccionado = new EventEmitter();
 
   // tslint:disable-next-line: typedef
   changeComponentLogin(login: number) {
   this.accesLogin = login;
-  if (this.accesLogin === 0){
-    this.accsesHome = 1;
+  sessionStorage.setItem('accesLogin','1');
+  console.error(this.accesLogin);
+  if (login === 1){
+    this.accesLogin = 1;
+    this.LocalaccesLogin = sessionStorage.getItem('accesLogin');
+    console.error(this.LocalaccesLogin,'this.LocalaccesLogin');
+    console.error(this.accesLogin,'this.accesLogin');
   }
  }
 

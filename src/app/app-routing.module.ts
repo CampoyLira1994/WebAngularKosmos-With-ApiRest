@@ -7,10 +7,11 @@ import { LoginComponent } from './login/login.component';
 import { FoodServiceComponent } from './food-service/food-service.component';
 
 const routes: Routes = [
-  // {path: '', component: LoginComponent},
-  {path: '', component: CoverPageComponent},
+
+  {path: '', component: LoginComponent},
   {path: 'admin', component: AdminComponent},
-  {path: 'foodService', component: FoodServiceComponent}
+  {path: 'foodService', component: FoodServiceComponent},
+  {path: 'cover', component: CoverPageComponent},
 ];
 
 @NgModule({

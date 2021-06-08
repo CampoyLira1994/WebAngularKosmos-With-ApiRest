@@ -1,6 +1,8 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, NgZone } from '@angular/core';
 import { EmployeesService } from '../shared/services/employees.service/employees.service';
 import { Employees } from '../shared/models/employees.model';
+import { Router } from '@angular/router';
+// import { AngularFireAuth } from '@angular/fire/auth';
 
 
 @Component({
@@ -10,7 +12,10 @@ import { Employees } from '../shared/models/employees.model';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private service: EmployeesService) { }
+  constructor(private service: EmployeesService,
+    private router: Router,
+    // private afAuth: AngularFireAuth,
+    private ngZone: NgZone) { }
 
   username: string;
   password: string;
@@ -19,33 +24,50 @@ export class LoginComponent implements OnInit {
   employees: Employees[];
   lengthEmpleados: number;
 
-    @Output() usuarioSeleccionado = new EventEmitter();
-    @Output() loginP: EventEmitter<number> = new EventEmitter<number>();
+  errorMessage = '';
 
+  @Output() usuarioSeleccionado = new EventEmitter();
+  @Output() loginP: EventEmitter<number> = new EventEmitter<number>();
 
-    // tslint:disable-next-line: typedef
-    changeComponentLogin(login: number) {
-      // this.usuarioSeleccionado.emit(login);
-      this.loginP.emit(login);
-    }
 
   // tslint:disable-next-line: typedef
-  ngOnInit() {
-
+  changeComponentLogin(login: number) {
+    // this.usuarioSeleccionado.emit(login);
+    this.loginP.emit(login);
   }
 
   // tslint:disable-next-line: typedef
-  findUser(){
+  ngOnInit() {
+    //     this.afAuth.user.subscribe(user => {
+    //       if (user) {
+    //         this.ngZone.run(() => {
+    //           this.router.navigate(['/todos']);
+    //         });
+
+    //   }
+    // });
+  }
+
+  loginInit() {
+    const user = this.username;
+    const pass = this.password;
+  }
+
+  // tslint:disable-next-line: typedef
+  findUser() {
     this.service.getUsers().subscribe(data => {
       this.employees = data;
+      console.log(this.employees);
       // tslint:disable-next-line: variable-name
       for (let i = 0, employees_1 = this.employees; i < this.employees.length; i++) {
         const empleado = employees_1[i];
         console.log(empleado.name);
-        if (this.username === empleado.name && this.password === empleado.password){
+        if (this.username === empleado.name && this.password === empleado.password) {
           console.log('Encontrado ');
-          this.changeComponentLogin(0);
-        }else{
+          this.changeComponentLogin(1);
+          sessionStorage.setItem('accesLogin', '1');
+          this.signIn();
+        } else {
           console.log('Error usuario no encontrado');
         }
       }
@@ -53,5 +75,14 @@ export class LoginComponent implements OnInit {
 
   }
 
+  signIn() {
+    // this.afAuth.auth.signInWithEmailAndPassword(this.username, this.password).then(() => {
+    this.router.navigate(['/cover']);
+    //  }).catch(response => {
+    //    this.errorMessage = response.message;
+    //  });
+    // }
+
+  }
 
 }

@@ -1,37 +1,38 @@
-              <!-- Modal -->
-              <form #form="">
-                <div class="modal fade" id="modalRecords" data-bs-backdrop="static" data-bs-keyboard="false"
-                  tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                  <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="staticBackdropLabel">
-                          Records
-                        </h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                      </div>
-                      <div class="modal-body">
-                        <!-- Table -->
+<!-- Modal -->
+<form #form="">
+  <div class="modal fade" id="modalRecords" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 style="color: #419fce;" class="modal-title" id="staticBackdropLabel">
+            Records
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <!-- Table -->
+          <div class="scrollbar scrollbar-primary" style="width:95%">
+            <div class="force-overflow">
 
-                        <table class="table table-dark table-striped">
-                          <thead>
-                            <tr>
-                              <th scope="col">Actions</th>
-                              <th scope="col">#</th>
-                              <th scope="col">Estatus</th>
-                              <th scope="col">UserType</th>
-                              <th scope="col">Card</th>
-                              <th scope="col">UserName</th>
-                              <th scope="col">Password</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <!-- <tr *ngFor="let employee of this.employees">
-                              <th scope="row">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <!-- <th scope="col">Actions</th> -->
+                    <th scope="col"></th>
+                    <th scope="col">#</th>
+                    <th scope="col">IdEmployee</th>
+                    <th scope="col">IdService</th>
+                    <th scope="col">Record</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let record of this.records">
+                    <th scope="row">
 
-                              Button trigger modal
+                      <!-- Button trigger modal -->
 
-                                <button (click)="toOpenEditEmployee(employee)" type="button" class="btn btn-secondary">
+                      <!-- <button (click)="toOpenEditRecords(records)" type="button" class="btn btn-secondary">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     class="bi bi-pen" viewBox="0 0 16 16">
                                     <path
@@ -46,131 +47,114 @@
                                     <path fill-rule="evenodd"
                                       d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
                                   </svg>
-                                </button>
+                                </button> -->
 
 
-                                Modal
-                                <div class="modal fade" id="exampleModal" tabindex="-1"
-                                  aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                  <div class="modal-dialog">
-                                    <div class="modal-content">
-                                      <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel" style="color: black;">Borrar</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                          aria-label="Close"></button>
-                                      </div>
-                                      <div class="modal-body">
-                                        <p style="color: black;">Esta Usted Seguro de Eliminar el Usuario ?</p>
-                                      </div>
-                                      <div class="modal-footer">
-                                        <button type="button" class="btn btn-success"
-                                          data-bs-dismiss="modal">Cancelar</button>
-                                          <button (click)="delteEmployee(employee.idEmployee)" type="button" class="btn btn-danger">
-                                            Borrar
-                                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                            class="bi bi-trash" viewBox="0 0 16 16">
-                                            <path
-                                              d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-                                            <path fill-rule="evenodd"
-                                              d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
-                                          </svg>
-                                        </button>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
+                      <!-- Modal -->
+                      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel" style="color: black;">Borrar</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                              <p style="color: black;">Esta Usted Seguro de Eliminar el Usuario ?</p>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-success" data-bs-dismiss="modal">Cancelar</button>
+                              <button (click)="delteRecord(records.idRecord)" type="button" class="btn btn-danger">
+                                Borrar
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                  class="bi bi-trash" viewBox="0 0 16 16">
+                                  <path
+                                    d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                                  <path fill-rule="evenodd"
+                                    d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                                </svg>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
 
-                              </th>
-                              <td>{{ employee.idEmployee }}</td>
-                              <td *ngIf="employee.idStatus == '0'">Incativo</td>
-                              <td *ngIf="employee.idStatus == '1'">Activo</td>
-                              <td *ngIf="employee.idStatus == '2'">Baja</td>
-                              <td *ngIf="employee.idUserType == '1'">Administrador</td>
-                              <td *ngIf="employee.idUserType == '2'">Usuario</td>
-                              <td *ngIf="employee.idUserType == '3'">Beneficiario</td>
-                              <td>{{ employee.credential }}</td>
-                              <td>{{ employee.name }}</td>
-                              <td>{{ employee.password }}</td>
-                            </tr> -->
-                          </tbody>
-                        </table>
-                        <!-- Table -->
+                    </th>
+                    <td>{{ record.idRecord }}</td>
+                    <td>{{ record.idEmployee }}</td>
+                    <td *ngIf="record.idService == '1'">Breakfast</td>
+                    <td *ngIf="record.idService == '2'">Food</td>
+                    <td *ngIf="record.idService == '3'">Pantry</td>
+                    <td>{{ record.record1 | date:'medium' }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!-- Table -->
 
-                        <!-- Edits table -->
-                        <br />
+          <!-- Edits table -->
+          <br />
 
-                        <!-- <div *ngIf="toOpenAddEmployeeBool" class="input-group">
-                          <span class="input-group-text">Add</span>
-                          <select [(ngModel)]="idStatus" placeholder="idStatus" name="idStatus" id="idStatus"
-                            class=" form-control btn btn-secondary dropdown-toggle " required>
-                            <option class="dropdown-item" value="1" selected>Activo</option>
-                            <option class="dropdown-item" value="0">Inactivo</option>
-                            <option class="dropdown-item" value="2">Baja</option>
-                          </select>
+          <form action="" *ngIf="toOpenAddRecordBool" class="input-group">
+            <span class="input-group-text">Add</span>
 
-                          <select [(ngModel)]="idUserType" placeholder="idUserType" name="idUserType" id="idUserType"
-                            class="form-control btn btn-secondary dropdown-toggle " required>
-                            <option class="dropdown-item" value="1" selected>Administrador</option>
-                            <option class="dropdown-item" value="2">Usuario</option>
-                            <option class="dropdown-item" value="3">Beneficiario</option>
-                          </select>
-                          <input type="text" class="form-control" placeholder="credential" name="credential"
-                            id="credential" [(ngModel)]="credential" required>
-                          <input type="text" class="form-control" placeholder="name" name="name" id="name"
-                            [(ngModel)]="name" required>
-                          <input type="password" class="form-control" placeholder="password" name="password"
-                            id="password" [(ngModel)]="password" required>
+            <input type="text" class="form-control" placeholder="EidEmployee" name="EidEmployee" id="EidEmployee"
+              [(ngModel)]="EidEmployee" required>
 
-                        </div> -->
+            <select [(ngModel)]="idService" placeholder="idService" name="idService" id="idService"
+              class=" form-control btn btn-secondary dropdown-toggle " required>
+              <option class="dropdown-item" value="1" selected>Breakfast</option>
+              <option class="dropdown-item" value="2">Food</option>
+              <option class="dropdown-item" value="3">Pantry</option>
+            </select>
 
-                        <!-- <div *ngIf="toOpenEditEmployeeBool" class="input-group">
-                          <span class="input-group-text">Edit</span>
-                          <select [(ngModel)]="EidStatus" placeholder="EidStatus" name="EidStatus" id="EidStatus"
-                            class=" form-control btn btn-secondary dropdown-toggle " required>
-                            <option class="dropdown-item" value="1" selected>Activo</option>
-                            <option class="dropdown-item" value="0">Inactivo</option>
-                            <option class="dropdown-item" value="2">Baja</option>
-                          </select>
+            <input type="datetime" class="form-control" placeholder="record1" name="record1" id="record1"
+              [(ngModel)]="record1" required>
 
-                          <select [(ngModel)]="EidUserType" placeholder="EidUserType" name="EidUserType"
-                            id="EidUserType" class="form-control btn btn-secondary dropdown-toggle " required>
-                            <option class="dropdown-item" value="1" selected>Administrador</option>
-                            <option class="dropdown-item" value="2">Usuario</option>
-                            <option class="dropdown-item" value="3">Beneficiario</option>
-                          </select>
-                          <input [(ngModel)]="Ecredential" type="text" placeholder="Ecredential" name="Ecredential"
-                            id="Ecredential" class="form-control" required>
-                          <input [(ngModel)]="Ename" type="text" placeholder="Ename" name="Ename" id="Ename"
-                            class="form-control" required>
-                          <input [(ngModel)]="Epassword" type="password" placeholder="Epassword" name="Epassword"
-                            id="Epassword" class="form-control" required>
+          </form>
 
-                        </div> -->
+          <form action="" *ngIf="toOpenEditRecordBool" class="input-group">
+            <span class="input-group-text">Edit</span>
+            <input type="text" class="form-control" placeholder="idEmployee" name="idEmployee" id="idEmployee"
+              [(ngModel)]="idEmployee" required>
 
-                        <br />
-                        <!-- <button type="button" (click)="toOpenAddEmployee()" class="form-control"
+            <select [(ngModel)]="EidService" placeholder="EidService" name="EidService" id="EidService"
+              class=" form-control btn btn-secondary dropdown-toggle " required>
+              <option class="dropdown-item" value="1" selected>Breakfast</option>
+              <option class="dropdown-item" value="2">Food</option>
+              <option class="dropdown-item" value="3">Pantry</option>
+            </select>
+            <input type="datetime" class="form-control" placeholder="Erecord1" name="Erecord1" id="Erecord1"
+              [(ngModel)]="Erecord1" required>
+
+          </form>
+
+          <br />
+          <!-- <button type="button" (click)="toOpenAddRecord()" class="form-control"
                           class="btn btn-primary">
                           Add New
                         </button> -->
 
-                        <!-- Edits table -->
+          <!-- Edits table -->
 
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
-                          Cancel
-                        </button>
-                        <!-- <button (click)="addEmpoyeeAdmin()" *ngIf="toOpenAddEmployeeBool" type="button"
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+            Cancel
+          </button>
+          <!-- <button (click)="addRecordAdmin()" *ngIf="toOpenAddRecordBool" type="button"
                           class="btn btn-success" [disabled]="form.invalid">
                           Save Add
                         </button>
-                        <button (click)="editEmployee()" *ngIf="toOpenEditEmployeeBool" type="button"
+                        <button (click)="editRecord()" *ngIf="toOpenEditRecordBool" type="button"
                           class="btn btn-success" [disabled]="form.invalid">
                           Save Edit
                         </button> -->
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </form>
-              <!-- Modal -->
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+<!-- Modal -->

@@ -1,3 +1,4 @@
+import { RecordsService } from './shared/services/records.service/records.service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
@@ -51,13 +52,14 @@ import { TypeUserAdminComponent} from './admin/type-user.admin/typeuser-admin.co
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule,
+    HttpClientModule
 
     // BrowserAnimationsModule,
     // ToastrModule
   ],
   providers: [EmployeeService,
-    EmployeesService],
+    EmployeesService,
+    RecordsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
