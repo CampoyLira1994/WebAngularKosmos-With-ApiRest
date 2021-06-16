@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { RecordsService } from '../../shared/services/records.service/records.service';
+import { ExcelService } from './../../shared/services/excel.service/excel.service';
 
 import { Records } from '../../shared/models/records.model';
 
@@ -11,7 +12,8 @@ import { Records } from '../../shared/models/records.model';
 })
 export class RecordAdminComponent implements OnInit {
 
-  constructor(private service: RecordsService) { }
+  constructor(private service: RecordsService,
+              private excelService: ExcelService) { }
 
   records: Records[];
 
@@ -125,4 +127,10 @@ export class RecordAdminComponent implements OnInit {
     this.Erecord1 = null;
 
   }
+
+  exportAsXLSX(): void {
+    this.excelService.exportAsExcelFile(this.records, 'footballer_data');
+  }
+
+
 }

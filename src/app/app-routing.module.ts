@@ -12,6 +12,8 @@ const routes: Routes = [
   {path: 'admin', component: AdminComponent},
   {path: 'foodService', component: FoodServiceComponent},
   {path: 'cover', component: CoverPageComponent},
+  {path: 'login', component: LoginComponent}
+  // {path: '**', component: ErrorComponent}
 ];
 
 @NgModule({

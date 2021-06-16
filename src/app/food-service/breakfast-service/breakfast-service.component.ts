@@ -1,19 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 
-import { EmployeesService } from './../../shared/services/employees.service/employees.service';
-import { RecordsService } from './../../shared/services/records.service/records.service';
+import { EmployeesService } from '../../shared/services/employees.service/employees.service';
+import { RecordsService } from '../../shared/services/records.service/records.service';
 
-import { Employees } from './../../shared/models/employees.model';
-import { Records } from './../../shared/models/records.model';
+import { Employees } from '../../shared/models/employees.model';
+import { Records } from '../../shared/models/records.model';
 
 declare var $: any;
 
 @Component({
-  selector: 'app-pantry-service',
-  templateUrl: './pantry-service.component.html',
-  styleUrls: ['./pantry-service.component.css']
+  selector: 'app-breakfast-service',
+  templateUrl: './breakfast-service.component.html',
+  styleUrls: ['./breakfast-service.component.css']
 })
-export class PantryServiceComponent implements OnInit {
+export class BreakfastServiceComponent implements OnInit {
 
   constructor(private serviceEmployee: EmployeesService,
               private sericeRecord: RecordsService) { }
@@ -26,20 +26,23 @@ export class PantryServiceComponent implements OnInit {
   estatusEmployee: string;
   saludo: string;
 
-  //Records
+  // Records
   records: Records[];
   record: Records;
   idRecords: number;
 
+
   ngOnInit(): void {
-    let date: Date = new Date();
-    console.log(date,'fecha ngOnInit');
+    const date: Date = new Date();
+    console.log(date, 'fecha ngOnInit');
     // tslint:disable-next-line: only-arrow-functions
+    // tslint:disable-next-line: typedef
     $('.showtoast').click(function(){
       $('.toast').toast('show');
       });
 
     // tslint:disable-next-line: only-arrow-functions
+    // tslint:disable-next-line: typedef
     $('.closetoast').click(function(){
         $('.toast').toast('close');
         });
@@ -56,6 +59,7 @@ export class PantryServiceComponent implements OnInit {
   checkEmployee(cardEmployee){
    // tslint:disable-next-line: triple-equals
    console.log(this.Employees);
+   console.log(cardEmployee);
    this.Employee = this.Employees.find(x => x.credential == cardEmployee);
    // tslint:disable-next-line: no-conditional-assignment
    if (this.Employee != null){
@@ -67,6 +71,7 @@ export class PantryServiceComponent implements OnInit {
      $('.toast').toast('show');
      this.cardEmployee = null;
      this.addRecord();
+     this.print();
    }else{
     this.estatusEmployee = 'Sin Acceso';
     this.nameEmployee = 'Usuario no reconocido';
@@ -98,18 +103,18 @@ export class PantryServiceComponent implements OnInit {
    // tslint:disable-next-line: typedef
    addRecord() {
      this.getRecors();
-     let date: Date = new Date();
+     const date: Date = new Date();
      this.sericeRecord.createRecord({
       idRecord: this.idRecords,
       idEmployee: this.idEmployee,
       idService: 3,
-      record1: date
+      record1: date.toLocaleString('en-US', { hour: 'numeric' , minute: 'numeric', second: 'numeric', hour12: true})
       })
       .subscribe((data) => {
         // this.getEmployees();
         // this.refresh();
       });
-     console.log(date,'fecha addRecord');
+     console.log(date, 'fecha addRecord');
   }
 
   // tslint:disable-next-line: typedef
@@ -120,14 +125,17 @@ export class PantryServiceComponent implements OnInit {
 
 
   // tslint:disable-next-line: typedef
-  imprim2(){
+  print(){
     this.saludo = 'Bienvenido';
+    const date: Date = new Date();
     const mywindow = window.open('', 'PRINT', 'height=400,width=600');
-    mywindow.document.write('<html><head>');
-    mywindow.document.write('<h1>Mensaje de prueba para impresora<h1/></head><body >');
-    mywindow.document.writeln('-------------------------');
-    mywindow.document.writeln(this.saludo);
-    mywindow.document.write('Cuerpo de mensaje TEST OCS</body></html>');
+    mywindow.document.write('<h1>Desayuno OCS<h1/>');
+    mywindow.document.writeln('------------------------');
+    mywindow.document.writeln('<h3>Empleado: </h3><p>' + this.Employee.name + '</p>');
+    mywindow.document.writeln('<h3>Tarjeta: </h3><p>' + this.Employee.credential + '</p>');
+    mywindow.document.writeln('<h3>Servicio: </h3><p>' + 'Desayuno' + '</p>');
+    // tslint:disable-next-line: max-line-length
+    mywindow.document.writeln('<h3>Fecha: </h3><p>' + date.toLocaleString('en-US', {day: '2-digit', month: '2-digit', year: '2-digit', hour: 'numeric' , minute: 'numeric', second: 'numeric', hour12: true}) + '</p>');
     mywindow.document.close(); // necesario para IE >= 10
     mywindow.print();
     mywindow.close();

@@ -1,3 +1,4 @@
+import { NgForm } from '@angular/forms';
 import { Component, EventEmitter, OnInit, Output, NgZone } from '@angular/core';
 import { EmployeesService } from '../shared/services/employees.service/employees.service';
 import { Employees } from '../shared/models/employees.model';
@@ -13,9 +14,9 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
 
   constructor(private service: EmployeesService,
-    private router: Router,
+              private router: Router,
     // private afAuth: AngularFireAuth,
-    private ngZone: NgZone) { }
+              private ngZone: NgZone) { }
 
   username: string;
   password: string;
@@ -48,9 +49,16 @@ export class LoginComponent implements OnInit {
     // });
   }
 
+  // tslint:disable-next-line: typedef
   loginInit() {
     const user = this.username;
     const pass = this.password;
+  }
+
+  // tslint:disable-next-line: typedef
+  login(form: NgForm){
+    const email = form.value.email;
+    const password = form.value.password;
   }
 
   // tslint:disable-next-line: typedef
@@ -75,6 +83,7 @@ export class LoginComponent implements OnInit {
 
   }
 
+  // tslint:disable-next-line: typedef
   signIn() {
     // this.afAuth.auth.signInWithEmailAndPassword(this.username, this.password).then(() => {
     this.router.navigate(['/cover']);

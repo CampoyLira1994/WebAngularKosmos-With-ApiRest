@@ -24,8 +24,9 @@ import { EmployeesService } from '../app/shared/services/employees.service/emplo
 import { ServiceAdminComponent } from './admin/service-admin/service-admin.component';
 import { StatusAdminComponent } from './admin/status-admin/status-admin.component';
 import { FoodServiceComponent } from './food-service/food-service.component';
-import { PantryServiceComponent } from './food-service/pantry-service/pantry-service.component';
+import { BreakfastServiceComponent } from './food-service/breakfast-service/breakfast-service.component';
 import { TypeUserAdminComponent} from './admin/type-user.admin/typeuser-admin.component';
+import { ExcelService } from './shared/services/excel.service/excel.service';
 
 
 @NgModule({
@@ -44,7 +45,7 @@ import { TypeUserAdminComponent} from './admin/type-user.admin/typeuser-admin.co
     ServiceAdminComponent,
     StatusAdminComponent,
     FoodServiceComponent,
-    PantryServiceComponent,
+    BreakfastServiceComponent,
     TypeUserAdminComponent
 
   ],
@@ -59,7 +60,8 @@ import { TypeUserAdminComponent} from './admin/type-user.admin/typeuser-admin.co
   ],
   providers: [EmployeeService,
     EmployeesService,
-    RecordsService],
+    RecordsService,
+    ExcelService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
