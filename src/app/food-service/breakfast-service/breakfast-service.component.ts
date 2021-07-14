@@ -16,7 +16,7 @@ declare var $: any;
 export class BreakfastServiceComponent implements OnInit {
 
   constructor(private serviceEmployee: EmployeesService,
-              private sericeRecord: RecordsService) { }
+              private serviceRecord: RecordsService) { }
 
   cardEmployee: number;
   idEmployee: number;
@@ -28,13 +28,15 @@ export class BreakfastServiceComponent implements OnInit {
 
   // Records
   records: Records[];
+  recordsNew: Records[];
   record: Records;
   idRecords: number;
+  recordConut: number;
 
 
   ngOnInit(): void {
     const date: Date = new Date();
-    console.log(date, 'fecha ngOnInit');
+    // console.log(date, 'fecha ngOnInit');
     // tslint:disable-next-line: only-arrow-functions
     // tslint:disable-next-line: typedef
     $('.showtoast').click(function(){
@@ -49,7 +51,7 @@ export class BreakfastServiceComponent implements OnInit {
 
     this.serviceEmployee.getUsers().subscribe((data) => {
     this.Employees = data;
-    console.log(data);
+    // console.log(data);
 
     });
 
@@ -57,54 +59,79 @@ export class BreakfastServiceComponent implements OnInit {
 
   // tslint:disable-next-line: typedef
   checkEmployee(cardEmployee){
+    // this.sericeRecord.getRecords().subscribe((data) =>){
+
+    // }
+   //  console.log(cardEmployee);
    // tslint:disable-next-line: triple-equals
-   console.log(this.Employees);
-   console.log(cardEmployee);
    this.Employee = this.Employees.find(x => x.credential == cardEmployee);
    // tslint:disable-next-line: no-conditional-assignment
    if (this.Employee != null){
+     console.log(cardEmployee, this.Employee.idEmployee);
      this.idEmployee = this.Employee.idEmployee;
-     console.log(this.Employee);
+
+     // tslint:disable-next-line: no-conditional-assignment
      this.estatusEmployee = 'Acceso Correcto';
      this.nameEmployee = this.Employee.name;
      this.saludo = 'Bienvenido';
      $('.toast').toast('show');
-     this.cardEmployee = null;
      this.addRecord();
-     this.print();
+     this.cardEmployee = null;
    }else{
     this.estatusEmployee = 'Sin Acceso';
-    this.nameEmployee = 'Usuario no reconocido';
+    this.nameEmployee = 'Ingrese su numero valido';
     $('.toast').toast('show');
+    this.printError();
     this.cardEmployee = null;
-    this.saludo = '';
+    this.saludo = 'Sin Usuario';
    }
 
   }
 
    // tslint:disable-next-line: typedef
    getRecors() {
-    this.sericeRecord.getRecords().subscribe((data) => {
+    this.serviceRecord.getRecords().subscribe((data) => {
       this.records = data;
+      console.log(this.records);
+      // tslint:disable-next-line: triple-equals
+      this.recordsNew = this.records.filter(elements => {
+
+      });
+      this.records.forEach(element => {
+        // tslint:disable-next-line: no-conditional-assignment
+        if (element.idEmployee === 3){// Tipo de emleado a filtrar recolocar para el check del filtrado
+          // tslint:disable-next-line: prefer-const
+          // this.recordsNew = element;
+          this.recordsNew.push(element);
+          console.log(this.recordsNew.length, 'this.recordsNew');
+        }
+
+      });
+
+      console.log(this.recordsNew , 'PUSH Records by Emplyee');
+      console.log(this.records.length , 'this.records.length');
+
       // tslint:disable-next-line: variable-name
-      for (
-        // tslint:disable-next-line: variable-name
-        let i = 0, records_1 = this.records;
-        i < this.records.length;
-        i++
-      ) {
-        const empleado = records_1[i];
-        this.record[i] = empleado;
-      }
+      // for (
+      //   // tslint:disable-next-line: variable-name
+      //   let i = 0, records_1 = this.records;
+      //   i < this.records.length;
+      //   i++
+      // ) {
+      //   // var empleado = records_1[i];
+      //   // this.record[i] = empleado;
+      //   // console.log(this.record[i],'this.record[i]');
+      // }
       this.idRecords = this.records.length + 1;
+      this.print();
     });
+    // if(this.estatusEmployee == '' ){}
   }
 
    // tslint:disable-next-line: typedef
    addRecord() {
-     this.getRecors();
      const date: Date = new Date();
-     this.sericeRecord.createRecord({
+     this.serviceRecord.createRecord({
       idRecord: this.idRecords,
       idEmployee: this.idEmployee,
       idService: 3,
@@ -113,6 +140,7 @@ export class BreakfastServiceComponent implements OnInit {
       .subscribe((data) => {
         // this.getEmployees();
         // this.refresh();
+        this.getRecors();
       });
      console.log(date, 'fecha addRecord');
   }
@@ -130,16 +158,34 @@ export class BreakfastServiceComponent implements OnInit {
     const date: Date = new Date();
     const mywindow = window.open('', 'PRINT', 'height=400,width=600');
     mywindow.document.write('<h1>Desayuno OCS<h1/>');
-    mywindow.document.writeln('------------------------');
-    mywindow.document.writeln('<h3>Empleado: </h3><p>' + this.Employee.name + '</p>');
-    mywindow.document.writeln('<h3>Tarjeta: </h3><p>' + this.Employee.credential + '</p>');
-    mywindow.document.writeln('<h3>Servicio: </h3><p>' + 'Desayuno' + '</p>');
+    mywindow.document.write('<h3>Servicio: ' + 'Desayuno' + '</h3>');
     // tslint:disable-next-line: max-line-length
-    mywindow.document.writeln('<h3>Fecha: </h3><p>' + date.toLocaleString('en-US', {day: '2-digit', month: '2-digit', year: '2-digit', hour: 'numeric' , minute: 'numeric', second: 'numeric', hour12: true}) + '</p>');
-    mywindow.document.close(); // necesario para IE >= 10
+    mywindow.document.write('<h2>Fecha: ' + date.toLocaleString('en-US', {day: '2-digit', month: '2-digit', year: '2-digit', hour: 'numeric' , minute: 'numeric', second: 'numeric', hour12: true}) + '</h2>');
+    mywindow.document.write('<p>Tiket: ' + this.idRecords + '</p>');
+    mywindow.document.write('<p>Tarjeta: ' + this.Employee.credential + ' Empleado: ' + this.Employee.name + '</p>');
+    mywindow.document.write('<p>Bienvenido...: ' + 'Buen Provecho!!!' + '</p>');
+    mywindow.document.close(); // necesario para IE >= 10 this.idRecords
     mywindow.print();
     mywindow.close();
     }
+
+      // tslint:disable-next-line: typedef
+  printError(){
+
+
+    this.saludo = 'Bienvenido';
+    const date: Date = new Date();
+    const mywindow = window.open('', 'PRINT', 'height=400,width=600');
+    mywindow.document.write('<h1>ERROR DE ACCESO !! <h1/>');
+    mywindow.document.write('<h3>Tipo de error: ' + 'Mas de un registro' + '</h3>');
+    // tslint:disable-next-line: max-line-length
+    mywindow.document.write('<p>Fecha: ' + date.toLocaleString('en-US', {day: '2-digit', month: '2-digit', year: '2-digit', hour: 'numeric' , minute: 'numeric', second: 'numeric', hour12: true}) + '</p>');
+    mywindow.document.write('<p>Usuario ya registrado por hoy' + this.cardEmployee  + '</p>');
+    mywindow.document.write('<p>Empleado: ' + this.nameEmployee + '</p>');
+    mywindow.document.close(); // necesario para IE >= 10 this.idRecords
+    mywindow.print();
+    mywindow.close();
+  }
 
 }
 

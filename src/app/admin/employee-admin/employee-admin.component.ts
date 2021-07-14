@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
-import { EmployeesService } from '../../shared/services/employees.service/employees.service';
+import { EmployeesService } from './../../shared/services/employees.service/employees.service';
 
-import { Employees } from '../../shared/models/employees.model';
+import { Employees } from './../../shared/models/employees.model';
 
 @Component({
   selector: 'app-employee-admin',

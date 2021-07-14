@@ -27,6 +27,14 @@ import { FoodServiceComponent } from './food-service/food-service.component';
 import { BreakfastServiceComponent } from './food-service/breakfast-service/breakfast-service.component';
 import { TypeUserAdminComponent} from './admin/type-user.admin/typeuser-admin.component';
 import { ExcelService } from './shared/services/excel.service/excel.service';
+import { EmpresasComponent } from './navbar/empresas/empresas.component';
+import { CatalogosComponent } from './navbar/catalogos/catalogos.component';
+import { EmpleadosComponent } from './navbar/catalogos/empleados/empleados.component';
+import { ServicioComponent } from './navbar/catalogos/servicio/servicio.component';
+import { EstatusComponent } from './navbar/catalogos/estatus/estatus.component';
+import { TipoEmpleadosComponent } from './navbar/catalogos/tipo-empleados/tipo-empleados.component';
+import { AreaComponent } from './navbar/catalogos/area/area.component';
+import { ReportesComponent } from './navbar/reportes/reportes.component';
 
 
 @NgModule({
@@ -46,7 +54,15 @@ import { ExcelService } from './shared/services/excel.service/excel.service';
     StatusAdminComponent,
     FoodServiceComponent,
     BreakfastServiceComponent,
-    TypeUserAdminComponent
+    TypeUserAdminComponent,
+    EmpresasComponent,
+    CatalogosComponent,
+    EmpleadosComponent,
+    ServicioComponent,
+    EstatusComponent,
+    TipoEmpleadosComponent,
+    AreaComponent,
+    ReportesComponent
 
   ],
   imports: [
