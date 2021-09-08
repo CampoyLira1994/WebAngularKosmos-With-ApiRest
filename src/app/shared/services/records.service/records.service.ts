@@ -13,29 +13,29 @@ export class RecordsService {
   // formData: Reords;
   listRecords: Records[];
 
-  readonly rootURL = 'https://localhost:44301/api';
+  readonly rootURL = 'https://localhost:44356/api';
 
   // tslint:disable-next-line: typedef
   getRecords(): Observable<any> {
-    return this.http.get(this.rootURL + '/Records');
+    return this.http.get(this.rootURL + '/C1Reportes');
   }
 
   getRecordId(id): Observable<any> {
-    return this.http.get(this.rootURL + '/Records/' + id);
+    return this.http.get(this.rootURL + '/C1Reportes/' + id);
   }
 
   createRecord(record: any): Observable<any> {
-    return this.http.post(this.rootURL + '/Records', record);
+    return this.http.post(this.rootURL + '/C1Reportes', record);
   }
 
   editRecord(record: Records): Observable<any> {
     return this.http.put(
-      this.rootURL + '/Records/' + record.idRecord,
+      this.rootURL + '/C1Reportes/' + record.idRecord,
       record
     );
   }
 
   deleteRecord(id): Observable<any> {
-    return this.http.delete(this.rootURL + '/Records/' + id);
+    return this.http.delete(this.rootURL + '/C1Reportes/' + id);
   }
 }

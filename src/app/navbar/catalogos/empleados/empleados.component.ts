@@ -1,11 +1,13 @@
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit } from '@angular/core';
+import * as XLSX from 'xlsx';
 
 import { EmpleadosService } from './../../../shared/services/1empleados.service/empleados.service';
 
 import { Empleados } from './../../../shared/models/empleados.model';
 
+// Variabe para notificación toster
 declare var $: any;
+
 
 @Component({
   selector: 'app-empleados',
@@ -14,8 +16,29 @@ declare var $: any;
 })
 export class EmpleadosComponent implements OnInit {
 
-  constructor(private service: EmpleadosService) { }
+  constructor(private service: EmpleadosService) {
+     // tslint:disable-next-line: only-arrow-functions
+    // tslint:disable-next-line: typedef
+    $('.showtoast').click(function(){
+      $('.toast').toast('show');
+      });
 
+
+    // tslint:disable-next-line: only-arrow-functions
+    // tslint:disable-next-line: typedef
+    $('.closetoast').click(function(){
+        $('.toast').toast('close');
+        });
+
+  }
+
+  // Variables para cambio en botones de carga masiva
+  masv = false;
+  btnAgregar = false;
+
+  // Variables para carga de excel
+  data: any[];
+  documento: any;
 
   empleados: Empleados[];
   empleado: Empleados;
@@ -75,27 +98,14 @@ export class EmpleadosComponent implements OnInit {
     // });
 
     // console.log(date, 'fecha ngOnInit');
-    // tslint:disable-next-line: only-arrow-functions
-    // tslint:disable-next-line: typedef
-    $('.showtoast').click(function(){
-      $('.toast').toast('show');
-      });
-
-
-    // tslint:disable-next-line: only-arrow-functions
-    // tslint:disable-next-line: typedef
-    $('.closetoast').click(function(){
-        $('.toast').toast('close');
-        });
-
     this.getEmpleados();
   }
 
   // tslint:disable-next-line: typedef
   getEmpleados() {
+    console.log('se ejecuto this.getEmpleados();');
     this.service.getEmpleados().subscribe((data) => {
       this.empleados = data;
-      console.log(this.empleados, 'Empleados');
       // tslint:disable-next-line: variable-name
       for (
         // tslint:disable-next-line: variable-name
@@ -112,7 +122,6 @@ export class EmpleadosComponent implements OnInit {
 
   // tslint:disable-next-line: typedef
   addEmpleadoAdd() {
-    console.log('Agregado');
     this.service
       .createEmpleado({
         idEmpleado: this.idEmpleado,
@@ -139,6 +148,8 @@ export class EmpleadosComponent implements OnInit {
       .subscribe((data) => {
         this.getEmpleados();
         this.refresh();
+        $('.toast1').toast('show');
+        console.log('Agregado');
       });
   }
 
@@ -302,10 +313,107 @@ export class EmpleadosComponent implements OnInit {
     this.colonia = null;
     this.delegacionMunicipio = null;
     this.cp = null;
+    this.documento = null;
   }
 
   // tslint:disable-next-line: typedef
   cerrartoast(){
     $('.toast').toast('dispose');
   }
-}
+
+
+    // tslint:disable-next-line: typedef
+    importASXLSX(uploadedFile){
+      this.btnAgregar = false;
+      this.masv = false;
+      console.log(uploadedFile, 'uploadedFile');
+      console.log(uploadedFile.target.files, '2uploadedFile');
+      this.onFileChangeEmpleado(uploadedFile);
+      // this.getreportes();
+      return this.getEmpleados();
+    }
+
+
+    // tslint:disable-next-line: typedef
+    onFileChangeEmpleado(documento) {
+      const target: DataTransfer = (this.documento.target) as DataTransfer;
+      if (target.files.length !== 1) { throw new Error('Cannot use multiple files'); }
+      const reader: FileReader = new FileReader();
+      reader.onload = (e: any) => {
+        const bstr: string = e.target.result;
+        const wb: XLSX.WorkBook = XLSX.read(bstr, { type: 'binary' });
+        const wsname: string = wb.SheetNames[0];
+        const ws: XLSX.WorkSheet = wb.Sheets[wsname];
+
+        this.data = (XLSX.utils.sheet_to_json(ws, { header: 1, defval: null }));
+        console.log('data: ', this.data);
+        // aplico slice para omitir los encabezados.
+        const x = this.data.slice(1);
+        console.log('x: ', x);
+        x.forEach(empelado => {
+          console.log(empelado, 'empleado');
+          if (empelado[1] != null && empelado[2] != null && empelado[3] != null && empelado[4] != null
+            && empelado[7] != null && empelado[8] != null){
+          this.service.createEmpleado({
+            idEmpleado: empelado[0],
+            idEstatus: empelado[1],
+            idTipoUsuario: empelado[2],
+            idEmpresa: empelado[3],
+            idArea: empelado[4],
+            credencial: empelado[5],
+            contraseña: empelado[6],
+            nombres: empelado[7],
+            apellidos: empelado[8],
+            RFC: empelado[9],
+            CDC: empelado[10],
+            telefono1: empelado[11],
+            telefono2: empelado[12],
+            radio: empelado[13],
+            celular: empelado[14],
+            email: empelado[15],
+            calleYNumero: empelado[16],
+            Colonia: empelado[17],
+            delegacionMunicipio: empelado[18],
+            cp: empelado[19]
+           }).subscribe((data) => {
+            this.getEmpleados();
+          });
+        }
+        });
+      };
+
+      reader.readAsBinaryString(target.files[0]);
+
+    }
+
+    // tslint:disable-next-line: typedef
+    getDocument(evt: any){
+      this.documento =  evt;
+      if (this.documento != null){
+      // this.masv = false;
+      this.btnAgregar = true;
+      }else{
+        $('.toast').toast('show');
+        $('.toast1').toast('show');
+      }
+    }
+
+    // tslint:disable-next-line: typedef funcion ocultar botones de carga masiva
+    excelButton(){
+      this.toOpenAddEmpleadoBool = false;
+      // tslint:disable-next-line: no-conditional-assignment decicion para ocultar unos o otros botones
+      // tslint:disable-next-line: triple-equals
+      if (this.masv == false){
+        this.masv = true;
+      }else{
+        this.masv = false;
+      }
+
+    }
+
+    // tslint:disable-next-line: typedef
+    cancelarexcel(){
+      this.toOpenAddEmpleadoBool = true;
+    }
+
+  }

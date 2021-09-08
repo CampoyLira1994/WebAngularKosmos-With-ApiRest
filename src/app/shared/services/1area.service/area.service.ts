@@ -10,7 +10,7 @@ import { Area } from './../../models/area.model';
 export class AreaService {
   constructor(private http: HttpClient) { }
 
-  readonly rootURL = 'https://localhost:44301/api';
+  readonly rootURL = 'https://localhost:44356/api';
 
 
   getArea(): Observable<any> {

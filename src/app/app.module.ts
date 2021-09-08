@@ -35,6 +35,8 @@ import { EstatusComponent } from './navbar/catalogos/estatus/estatus.component';
 import { TipoEmpleadosComponent } from './navbar/catalogos/tipo-empleados/tipo-empleados.component';
 import { AreaComponent } from './navbar/catalogos/area/area.component';
 import { ReportesComponent } from './navbar/reportes/reportes.component';
+import { ServiciosComponent } from './food-service/servicios/servicios.component';
+import { SubServiciosComponent } from './food-service/sub-servicios/sub-servicios.component';
 
 
 @NgModule({
@@ -62,7 +64,9 @@ import { ReportesComponent } from './navbar/reportes/reportes.component';
     EstatusComponent,
     TipoEmpleadosComponent,
     AreaComponent,
-    ReportesComponent
+    ReportesComponent,
+    ServiciosComponent,
+    SubServiciosComponent
 
   ],
   imports: [

@@ -9,7 +9,7 @@ export class EmployeeService {
 
   formData: Employee;
   list: Employee[];
-  readonly rootUrl = 'https://localhost:44301/api';
+  readonly rootUrl = 'https://localhost:44356/api';
 
   constructor(
     private http: HttpClient
@@ -28,7 +28,7 @@ export class EmployeeService {
 
   // tslint:disable-next-line: typedef
   getUsers() {
-    this.http.get('https://localhost:44301/api/Employee').subscribe(data => {
+    this.http.get('https://localhost:44356/api/Employee').subscribe(data => {
       console.log(data);
     });
   }

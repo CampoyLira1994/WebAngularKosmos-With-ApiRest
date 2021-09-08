@@ -2,7 +2,7 @@
   <div class="container-fluid" >
 
     <a class="navbar-brand" href="/cover">
-      <h1 class="display-4" style="color: #276aa7;">OCS</h1></a>
+      <p class="h1"  style="color: #276aa7;">OCS</p></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -62,35 +62,31 @@
           </ul>
         </li>
 
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a style="color: #93c01f;" class="nav-link active" aria-current="page" href="/admin">ADMINISTRACIÓN</a>
-        </li>
+        </li> -->
         <!-- <li class="nav-item">
           <a class="nav-link" href="#">Link</a>
         </li> -->
-        <li class="nav-item dropdown">
-          <a style="color: #276aa7;" class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            SERVICIOS
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <!-- <li><a class="dropdown-item" href="/foodService">Despensa</a></li> -->
-            <!-- <li><a class="dropdown-item" href="#"></a></li> -->
-            <li><a class="dropdown-item" href="/foodService">Desayuno</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Comida</a></li>
-            <li><a class="dropdown-item" href="#">Cena</a></li>
-          </ul>
+
+
+        <!-- <select (change)="servicio(idServicio)" [(ngModel)]="idServicio" style="color: #276aa7; background-color: transparent;"  class="nav-link dropdown-toggle" role="button" aria-expanded="false" >
+          <option value="0" selected>SERVICIOS</option>
+          <option *ngFor="let servicio of this.servicios" value="{{ servicio.idServicio }}">{{ servicio.nombreServicio }}</option>
+        </select> -->
+
+        <li class="nav-item">
+          <a style="color: #276aa7;" class="nav-link active" aria-current="page" href="/foodService">SERVICIOS</a>
         </li>
-        <!-- <li class="nav-item">
-          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-        </li> -->
+
+
       </ul>
 
       <form class="d-flex">
         <!-- <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success" type="submit">Search</button> -->
         <figure>
-          <img type="button" alt="logo navbar" class="btn btn-outline-light"  routerLink="" style="margin-left: 65%; " src="../../assets/Logo.png" width="35%">
+          <img type="button" alt="logo navbar" class="btn btn-outline-light"  routerLink="" style="margin-left: 65%; " src="../../assets/Logo.png" width="40%">
           <!-- <figcaption>Texto descriptivo bajo la imagen</figcaption> -->
         </figure>
       </form>

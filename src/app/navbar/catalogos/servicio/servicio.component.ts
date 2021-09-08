@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ServiciosService } from './../../../shared/services/1servicios.service/servicios.service';
 
 import { Servicios } from './../../../shared/models/servicios.model';
-import { combineLatest } from 'rxjs';
+
 
 @Component({
   selector: 'app-servicio',
@@ -25,6 +25,7 @@ export class ServicioComponent implements OnInit {
   idServicio: number;
   idEmpresa: number;
   nombreServicio: string;
+  costo: number;
   inicio: Date;
   fin: Date;
   // Solo Fecha
@@ -68,8 +69,10 @@ export class ServicioComponent implements OnInit {
           idServicio: this.idServicio,
           idEmpresa: this.idEmpresa,
           nombreServicio: this.nombreServicio,
+          costo: this.costo,
           inicio: this.inicio,
-          fin: this.fin
+          fin: this.fin,
+          subServicio: null // Cambir dentro de la interface
       })
       .subscribe((data) => {
         this.getServicios();
@@ -85,8 +88,10 @@ export class ServicioComponent implements OnInit {
             idServicio: this.idServicio,
             idEmpresa: this.idEmpresa,
             nombreServicio: this.nombreServicio,
+            costo: this.costo,
             inicio: this.hInicio,
-            fin: this.hFin
+            fin: this.hFin,
+            subServicio: null // Cambir dentro de la interface
         })
         .subscribe((data) => {
           this.getServicios();
@@ -101,8 +106,10 @@ export class ServicioComponent implements OnInit {
           idServicio: this.EidServicio,
           idEmpresa: this.EidEmpresa,
           nombreServicio: this.EnombreServicio,
+          costo: this.costo,
           inicio: this.Einicio,
-          fin: this.Efin
+          fin: this.Efin,
+          subServicio: null // Cambir dentro de la interface
       })
       .subscribe((data) => {
         this.getServicios();

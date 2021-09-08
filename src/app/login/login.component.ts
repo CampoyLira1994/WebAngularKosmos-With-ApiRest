@@ -1,7 +1,7 @@
 import { NgForm } from '@angular/forms';
 import { Component, EventEmitter, OnInit, Output, NgZone } from '@angular/core';
 import { EmployeesService } from '../shared/services/employees.service/employees.service';
-import { Employees } from '../shared/models/employees.model';
+import { Empleados } from '../shared/models/empleados.model';
 import { Router } from '@angular/router';
 // import { AngularFireAuth } from '@angular/fire/auth';
 
@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
   password: string;
   access: number;
 
-  employees: Employees[];
+  employees: Empleados[];
   lengthEmpleados: number;
 
   errorMessage = '';
@@ -69,8 +69,9 @@ export class LoginComponent implements OnInit {
       // tslint:disable-next-line: variable-name
       for (let i = 0, employees_1 = this.employees; i < this.employees.length; i++) {
         const empleado = employees_1[i];
-        console.log(empleado.name);
-        if (this.username === empleado.name && this.password === empleado.password) {
+        console.log(empleado.nombres);
+        console.log(this.username, empleado.nombres, this.password, empleado.contraseña);
+        if (this.username === empleado.nombres && this.password === empleado.contraseña) {
           console.log('Encontrado ');
           this.changeComponentLogin(1);
           sessionStorage.setItem('accesLogin', '1');

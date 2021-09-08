@@ -13,7 +13,7 @@ export class TypeUserService {
 
   listTypeUser: TypeUser[];
 
-  readonly rootURL = 'https://localhost:44301/api';
+  readonly rootURL = 'https://localhost:44356/api';
 
 
      // tslint:disable-next-line: typedef

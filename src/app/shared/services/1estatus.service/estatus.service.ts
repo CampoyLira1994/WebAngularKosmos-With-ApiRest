@@ -10,7 +10,7 @@ import { Estatus } from './../../models/estatus.model';
 export class EstatusService {
   constructor(private http: HttpClient) { }
 
-  readonly rootURL = 'https://localhost:44301/api';
+  readonly rootURL = 'https://localhost:44356/api';
 
 
   getEstatus(): Observable<any> {

@@ -4,15 +4,15 @@
 
       <div class="modal-content">
         <div class="modal-header">
-          <h5 style="color: #419fce;" class="modal-title" id="staticBackdropLabel">
+          <h2 style="color: #419fce;" class="modal-title" id="staticBackdropLabel">
             Servicio
-          </h5>
+          </h2>
 
         </div>
         <div class="modal-body">
           <!-- Table -->
 
-          <div class="scrollbar scrollbar-primary" style="width:95%">
+          <div class="scrollbar scrollbar-primary" style="width:100%">
             <div class="force-overflow">
 
               <table class="table">
@@ -22,6 +22,7 @@
                     <th scope="col">#</th>
                     <th scope="col">Empresa</th>
                     <th scope="col">Nombre del Servicio</th>
+                    <th scope="col">Costo</th>
                     <th scope="col">Inicio</th>
                     <th scope="col">Fin</th>
                   </tr>
@@ -85,6 +86,7 @@
                     <td>{{ servicio.idServicio }}</td>
                     <td>{{ servicio.idEmpresa }}</td>
                     <td>{{ servicio.nombreServicio }}</td>
+                    <td>{{ servicio.costo }}</td>
                     <td>{{ servicio.inicio }}</td>
                     <td>{{ servicio.fin }}</td>
                   </tr>
@@ -112,6 +114,10 @@
               <input type="text" class="form-control" placeholder="Nombre Servicio" name="nombreServicio" id="nombreServicio"
               [(ngModel)]="nombreServicio" required>
 
+
+              <input type="number" class="form-control" placeholder="costo" name="costo" id="costo"
+              [(ngModel)]="costo">
+
               <!-- <input type="datetime-local" class="form-control" placeholder="Inicio" name="inicio" id="inicio"
               [(ngModel)]="inicio" required> -->
               <input class="form-control" type="time" name="hora" min="18:00" max="21:00" [(ngModel)]="hInicio"/>
@@ -134,6 +140,9 @@
 
             <input type="text" class="form-control" placeholder="Nombre Servicio" name="nombreServicio" id="nombreServicio"
             [(ngModel)]="EnombreServicio" required>
+
+            <input type="number" class="form-control" placeholder="costo" name="costo" id="costo"
+              [(ngModel)]="costo">
 
             <input type="datetime-local" class="form-control" placeholder="Inicio" name="inicio" id="inicio"
             [(ngModel)]="Einicio" required>

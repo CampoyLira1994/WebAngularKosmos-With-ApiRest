@@ -1,2 +1,14 @@
-<app-navbar></app-navbar>
-<app-breakfast-service></app-breakfast-service>
+<app-navbar *ngIf="this.navbarB"></app-navbar>
+
+<select  (change)="servicio(idServicio)" [(ngModel)]="idServicio" class="form-select" aria-label="Default select example">
+  <option value="0" selected>SERVICIO</option>
+  <option *ngFor="let servicio of this.servicios" value="{{ servicio.idServicio }}">{{ servicio.nombreServicio }}</option>
+</select>
+
+<app-servicios *ngIf="this.servicioB"
+[idServicio] = "idServicio"
+></app-servicios>
+<app-sub-servicios *ngIf="this.subServicioB"
+[idServicio] = "idServicio">
+</app-sub-servicios>
+
