@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { Servicios } from './../../models/subServicios.model';
+import { SubServicios } from './../../models/subServicios.model';
 
 
 @Injectable({
@@ -23,11 +23,11 @@ export class SubServicuiosService {
     return this.http.get(this.rootURL + '/C1SubServicio/' + id);
   }
 
-  createSubServicio(subServicio: Servicios): Observable<any>{
+  createSubServicio(subServicio: SubServicios): Observable<any>{
     return this.http.post(this.rootURL + '/C1SubServicio', subServicio);
   }
 
-  editSubServicio(subServicio: Servicios): Observable<any>{
+  editSubServicio(subServicio: SubServicios): Observable<any>{
     return this.http.put(this.rootURL + '/C1SubServicio/' + subServicio.idSubServicio, subServicio);
   }
 

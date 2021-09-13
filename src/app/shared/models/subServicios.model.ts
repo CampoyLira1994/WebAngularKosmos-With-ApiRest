@@ -1,7 +1,7 @@
-export class Servicios {
+export class SubServicios {
   idSubServicio: number;
-  nombreSubServicio: string;
   idServicio: number;
+  nombreSubServicio: string;
   inicio: Date;
   fin: Date;
   costo: number;

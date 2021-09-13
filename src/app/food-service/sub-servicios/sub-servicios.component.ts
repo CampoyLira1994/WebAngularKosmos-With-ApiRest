@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 import { Empleados } from '../../shared/models/empleados.model';
-import { Servicios } from './../../shared/models/subServicios.model';
+import { SubServicios } from './../../shared/models/subServicios.model';
 import { Reportes } from './../../shared/models/reportes.model';
 import { Derechos } from './../../shared/models/derechos.model';
 
@@ -30,10 +30,10 @@ export class SubServiciosComponent implements OnInit {
 
   cardEmployee: number;
 
-  subServicios: Servicios[];
-  subServicio: Servicios;
-  selctSubServicio: Servicios;
-  newSubServicios: Servicios[];
+  subServicios: SubServicios[];
+  subServicio: SubServicios;
+  selctSubServicio: SubServicios;
+  newSubServicios: SubServicios[];
 
 
   estatusEmployee: string;
@@ -48,8 +48,8 @@ export class SubServiciosComponent implements OnInit {
   idReportes: number;
 
   // Ticket
-  servicio: Servicios;
-  servicios: Servicios[];
+  servicio: SubServicios;
+  servicios: SubServicios[];
   saludo: string;
 
   // Derechos
@@ -205,6 +205,7 @@ export class SubServiciosComponent implements OnInit {
         this.getRecors();
       });
   }
+
 
 
   selectSubServicio(selctSubServicio){
