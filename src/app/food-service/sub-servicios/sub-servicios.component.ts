@@ -35,6 +35,12 @@ export class SubServiciosComponent implements OnInit {
   selctSubServicio: SubServicios;
   newSubServicios: SubServicios[];
 
+  contadorRecordsNew = 0;
+
+  fecha: Date;
+  fechaHoy: Date;
+  fechaStr: string;
+
 
   estatusEmployee: string;
   nameEmployee: string;
@@ -55,8 +61,9 @@ export class SubServiciosComponent implements OnInit {
   // Derechos
   derechos: Derechos[];
   numeroServicios: number;
+  derecho: Derechos;
 
-  //Control opcines
+  // Control opcines
   opcion = false;
 
   ngOnInit(): void {
@@ -80,13 +87,13 @@ export class SubServiciosComponent implements OnInit {
 
     // tslint:disable-next-line: only-arrow-functions
     // tslint:disable-next-line: typedef
-    $('.showtoast').click(function () {
+    $('.showtoast').click(function() {
       $('.toast').toast('show');
     });
 
     // tslint:disable-next-line: only-arrow-functions
     // tslint:disable-next-line: typedef
-    $('.closetoast').click(function () {
+    $('.closetoast').click(function() {
       $('.toast').toast('close');
     });
 
@@ -104,33 +111,60 @@ export class SubServiciosComponent implements OnInit {
 
     // tslint:disable-next-line: no-conditional-assignment
     if (this.Employee != null) {
-      // console.log(cardEmployee, this.Employee.idEmpleado, 'mensajeeee');
+
       this.idEmployee = this.Employee.idEmpleado;
+      // Busca y selecciona los derechos del usuario o empleado encontrado para poder asignarselo en el
+      // this.numeroServicios
+      this.derecho = this.derechos.find((x) => x.idEmpleado === this.idEmployee);
+
+      this.numeroServicios = this.derecho.numeroServicios;
 
       // -----------------------------------------------------
 
       this.reporteNew = this.reportes.filter((elements) => { });
       this.reportes.forEach((element, i) => {
 
-        if (this.reportes.length === i + 1) {
-          this.numeroServicios = this.derechos[0].numeroServicios;
+           // tslint:disable-next-line: triple-equals
+        if (element.idEmpleado == this.idEmployee) {
+          // Tipo de emleado a filtrar recolocar para el check del filtrado
 
-          console.log(this.numeroServicios,this.reporteNew.length,'Contadores en orden');
+          const date: Date = new Date();
+          let mes: number;
+          // console.log(date.getDate(), date.getMonth() + 1, date.getFullYear());
+          this.fecha = new Date(element.fechaDate);
+          mes = date.getMonth() + 1;
+          // this.fechaStr = (date.getFullYear() + '-' + mes + '-' + date.getDate());
+          this.fechaHoy = new Date(date.getFullYear() + '-' + mes + '-' + date.getDate());
+          console.log(this.fecha, '----------', this.fechaHoy);
+          // Valida que el egistro dea del dia de hoy para poder der contemplado o tomado en cuenta dentro del PUSH
+          // tslint:disable-next-line: max-line-length
+          if ( this.fecha.getDate() === this.fechaHoy.getDate() && this.fecha.getMonth() === this.fechaHoy.getMonth() && this.fecha.getFullYear() === this.fechaHoy.getFullYear()){
+            this.reporteNew.push(element);
+            this.contadorRecordsNew = this.reporteNew.length;
+            console.log(this.reporteNew.length, 'this.recordsNew.length');
+          }
+
+
+        }
+
+
+        if (this.reportes.length === i + 1) {
+
+          console.log(this.numeroServicios, 'this.numeroServicios', this.contadorRecordsNew, 'this.recordsNew.length + 1');
 
           // tslint:disable-next-line: no-conditional-assignment
-          if (this.numeroServicios > this.reporteNew.length) {
+          if (this.numeroServicios > this.contadorRecordsNew) {
             // tslint:disable-next-line: no-conditional-assignment
             this.estatusEmployee = 'Acceso Correcto';
             this.nameEmployee = this.Employee.nombres + this.Employee.apellidos;
             this.saludo = 'Bienvenido';
             this.opcion = true;
 
-
-            //77777777777777777777777777777777777777777777777777777777777777777777777
+            // 77777777777777777777777777777777777777777777777777777777777777777777777
             this.newSubServicios = [];
             this.subServicuiosService.getSubServicios().subscribe((data) => {
               this.subServicios = data;
-              // tslint:disable-next-line: no-unused-expression
+              // tslint:disable-next-line: no-shadowed-variable
               this.subServicios.forEach(element => {
 
                 // tslint:disable-next-line: triple-equals
@@ -145,7 +179,7 @@ export class SubServiciosComponent implements OnInit {
 
               // console.log(this.subServicio, 'Aqui esta el numero de subServicios');
             });
-            //77777777777777777777777777777777777777777777777777777777777777777777777
+            // 77777777777777777777777777777777777777777777777777777777777777777777777
 
           } else {
             this.opcion = false;
@@ -158,11 +192,7 @@ export class SubServiciosComponent implements OnInit {
           }
         }
 
-        // tslint:disable-next-line: triple-equals
-        if (element.idEmpleado == this.idEmployee) {
-          this.reporteNew.push(element);
-          // console.log(this.recordsNew,'this.recordsNew');
-        }
+
       });
 
       // -----------------------------------------------------
@@ -208,6 +238,7 @@ export class SubServiciosComponent implements OnInit {
 
 
 
+  // tslint:disable-next-line: typedef
   selectSubServicio(selctSubServicio){
     this.selctSubServicio = selctSubServicio;
     // console.log(this.selctSubServicio);
@@ -262,6 +293,7 @@ export class SubServiciosComponent implements OnInit {
     this.opcion = false;
   }
 
+  // tslint:disable-next-line: typedef
   printError() {
     const date: Date = new Date();
     const mywindow = window.open('', 'PRINT', 'height=400,width=600');
