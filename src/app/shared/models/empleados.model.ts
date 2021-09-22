@@ -4,19 +4,20 @@ export class Empleados {
   idTipoUsuario: number;
   idEmpresa: number;
   idArea: string;
+  idDerecho: number;
   credencial: number;
   contraseña: string;
   nombres: string;
   apellidos: string;
-  RFC: string;
-  CDC: string;
+  rFC: string;
+  cDC: string;
   telefono1: string;
   telefono2: string;
   radio: string;
   celular: string;
   email: string;
   calleYNumero: string;
-  Colonia: string;
+  colonia: string;
   delegacionMunicipio: string;
   cp: any;
 }

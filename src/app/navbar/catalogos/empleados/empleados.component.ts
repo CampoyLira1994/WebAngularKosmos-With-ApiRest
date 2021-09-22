@@ -2,8 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import * as XLSX from 'xlsx';
 
 import { EmpleadosService } from './../../../shared/services/1empleados.service/empleados.service';
+import { DerechosService } from './../../../shared/services/1derechos.service/derechos.service';
+import { ServiciosService } from './../../../shared/services/1servicios.service/servicios.service';
 
 import { Empleados } from './../../../shared/models/empleados.model';
+import { Derechos } from './../../../shared/models/derechos.model';
+import { Servicios } from './../../../shared/models/servicios.model';
 
 // Variabe para notificación toster
 declare var $: any;
@@ -16,7 +20,9 @@ declare var $: any;
 })
 export class EmpleadosComponent implements OnInit {
 
-  constructor(private service: EmpleadosService) {
+  constructor(private service: EmpleadosService,
+              private derechosService: DerechosService,
+              private serviciosService: ServiciosService) {
      // tslint:disable-next-line: only-arrow-functions
     // tslint:disable-next-line: typedef
     $('.showtoast').click(function(){
@@ -31,6 +37,36 @@ export class EmpleadosComponent implements OnInit {
         });
 
   }
+  // variables servicios ***********************************************
+  servicios: Servicios[];
+  idServicio: number;
+
+  // Variables de Derechos ****************************************************
+  derechos: Derechos[];
+  derechosServi: Derechos[];
+  derecho: Derechos;
+  derechoEstatus = false;
+  idDelete: number;
+
+  // to open input
+  btnAgregarDrecho = true;
+  toOpenAddDerechosBool = false;
+  toOpenEditDerechosBool = false;
+
+  // Derecho
+  DereidDerecho: number;
+  DereidServicio: number;
+  DereidEmpleado: number;
+  DerenumeroServicios: number;
+
+  // DerechoEdit
+
+  EDereidDerecho: number;
+  EDereidServicio: number;
+  EDereidEmpleado: number;
+  EDerenumeroServicios: number;
+
+  // Empelados ****************************************************
 
   // Variables para cambio en botones de carga masiva
   masv = false;
@@ -53,6 +89,7 @@ export class EmpleadosComponent implements OnInit {
   idTipoUsuario = 1;
   idEmpresa = 1;
   idArea = '1';
+  idDerecho: number;
   credencial: number;
   contrasena: string;
   nombres: string;
@@ -75,6 +112,7 @@ export class EmpleadosComponent implements OnInit {
   EidTipoUsuario: number;
   EidEmpresa: number;
   EidArea: string;
+  EidDerecho: number;
   Ecredencial: number;
   Econtrasena: string;
   Enombres: string;
@@ -96,6 +134,9 @@ export class EmpleadosComponent implements OnInit {
     // this.service.getUsersId(1).subscribe(data => {
     //   console.log(data);
     // });
+    this.serviciosService.getServicios().subscribe((data)=>{
+    this.servicios = data;
+    });
 
     // console.log(date, 'fecha ngOnInit');
     this.getEmpleados();
@@ -129,19 +170,20 @@ export class EmpleadosComponent implements OnInit {
         idTipoUsuario: this.idTipoUsuario,
         idEmpresa: this.idEmpresa,
         idArea: this.idArea,
+        idDerecho: 0,
         credencial: this.credencial,
         contraseña: this.contrasena,
         nombres: this.nombres,
         apellidos: this.apellidos,
-        RFC: this.rFC,
-        CDC: this.cDC,
+        rFC: this.rFC,
+        cDC: this.cDC,
         telefono1: this.telefono1,
         telefono2: this.telefono2,
         radio: this.radio,
         celular: this.celular,
         email: this.email,
         calleYNumero: this.calleYNumero,
-        Colonia: this.colonia,
+        colonia: this.colonia,
         delegacionMunicipio: this.delegacionMunicipio,
         cp: this.cp
       })
@@ -154,7 +196,7 @@ export class EmpleadosComponent implements OnInit {
   }
 
   // tslint:disable-next-line: typedef
-  editEmpleado() {
+  editEmpleado(ValidDerecho) {
     this.service
       .editEmpleado({
         idEmpleado: this.EidEmpleado,
@@ -162,26 +204,29 @@ export class EmpleadosComponent implements OnInit {
         idTipoUsuario: this.EidTipoUsuario,
         idEmpresa: this.EidEmpresa,
         idArea: this.EidArea,
+        idDerecho: ValidDerecho,
         credencial: this.Ecredencial,
         contraseña: this.Econtrasena,
         nombres: this.Enombres,
         apellidos: this.Eapellidos,
-        RFC: this.ErFC,
-        CDC: this.EcDC,
+        rFC: this.ErFC,
+        cDC: this.EcDC,
         telefono1: this.Etelefono1,
         telefono2: this.Etelefono2,
         radio: this.Eradio,
         celular: this.Ecelular,
         email: this.Eemail,
         calleYNumero: this.EcalleYNumero,
-        Colonia: this.Ecolonia,
+        colonia: this.Ecolonia,
         delegacionMunicipio: this.EdelegacionMunicipio,
         cp: this.Ecp
       })
       .subscribe((data) => {
+        if (ValidDerecho === 0){
         this.getEmpleados();
         this.refresh();
         $('.toast').toast('show');
+        }
       });
   }
 
@@ -214,6 +259,7 @@ export class EmpleadosComponent implements OnInit {
     this.EidTipoUsuario = empleado.idTipoUsuario;
     this.EidEmpresa = empleado.idEmpresa;
     this.EidArea = empleado.idArea;
+    this.EidDerecho = empleado.idDerecho;
     this.Ecredencial = empleado.credencial;
     this.Econtrasena = empleado.contraseña;
     this.Enombres = empleado.nombres;
@@ -233,7 +279,7 @@ export class EmpleadosComponent implements OnInit {
   }
 
   // tslint:disable-next-line: typedef
-  click(nombre){
+  selecEmpelado(nombre){
     this.toOpenAddEmpleadoBool = false;
     this.toOpenEditEmpleadoBool = true;
 
@@ -242,24 +288,32 @@ export class EmpleadosComponent implements OnInit {
     // tslint:disable-next-line: no-conditional-assignment
     if (this.empleado != null){
 
+      // tslint:disable-next-line: triple-equals
+      if (this.empleado.idDerecho === 0){
+        this.derechoEstatus = true;
+      }else{
+        this.derechoEstatus = false;
+      }
+
       this.EidEmpleado = this.empleado.idEmpleado;
       this.EidEstatus = this.empleado.idEstatus;
       this.EidTipoUsuario = this.empleado.idTipoUsuario;
       this.EidEmpresa = this.empleado.idEmpresa;
       this.EidArea = this.empleado.idArea;
+      this.EidDerecho = this.empleado.idDerecho;
       this.Ecredencial = this.empleado.credencial;
       this.Econtrasena = this.empleado.contraseña;
       this.Enombres = this.empleado.nombres;
       this.Eapellidos = this.empleado.apellidos;
-      this.ErFC = this.empleado.RFC;
-      this.EcDC = this.empleado.CDC;
+      this.ErFC = this.empleado.rFC;
+      this.EcDC = this.empleado.cDC;
       this.Etelefono1 = this.empleado.telefono1;
       this.Etelefono2 = this.empleado.telefono2;
       this.Eradio = this.empleado.radio;
       this.Ecelular = this.empleado.celular;
       this.Eemail = this.empleado.email;
       this.EcalleYNumero = this.empleado.calleYNumero;
-      this.Ecolonia = this.empleado.Colonia;
+      this.Ecolonia = this.empleado.colonia;
       this.EdelegacionMunicipio = this.empleado.delegacionMunicipio;
       this.Ecp = this.empleado.cp;
 
@@ -278,6 +332,7 @@ export class EmpleadosComponent implements OnInit {
     this.EidTipoUsuario = null;
     this.EidEmpresa = null;
     this.EidArea = null;
+    this.EidDerecho = null;
     this.Ecredencial = null;
     this.Econtrasena = null;
     this.Enombres = null;
@@ -298,6 +353,7 @@ export class EmpleadosComponent implements OnInit {
     this.idTipoUsuario = 1;
     this.idEmpresa = 1;
     this.idArea = '1';
+    this.idDerecho = 0;
     this.credencial = null;
     this.contrasena = null;
     this.nombres = null;
@@ -360,21 +416,22 @@ export class EmpleadosComponent implements OnInit {
             idTipoUsuario: empelado[2],
             idEmpresa: empelado[3],
             idArea: empelado[4],
-            credencial: empelado[5],
-            contraseña: empelado[6],
-            nombres: empelado[7],
-            apellidos: empelado[8],
-            RFC: empelado[9],
-            CDC: empelado[10],
-            telefono1: empelado[11],
-            telefono2: empelado[12],
-            radio: empelado[13],
-            celular: empelado[14],
-            email: empelado[15],
-            calleYNumero: empelado[16],
-            Colonia: empelado[17],
-            delegacionMunicipio: empelado[18],
-            cp: empelado[19]
+            idDerecho: empelado[5],
+            credencial: empelado[6],
+            contraseña: empelado[7],
+            nombres: empelado[8],
+            apellidos: empelado[9],
+            rFC: empelado[10],
+            cDC: empelado[11],
+            telefono1: empelado[12],
+            telefono2: empelado[13],
+            radio: empelado[14],
+            celular: empelado[15],
+            email: empelado[16],
+            calleYNumero: empelado[17],
+            colonia: empelado[18],
+            delegacionMunicipio: empelado[19],
+            cp: empelado[20]
            }).subscribe((data) => {
             this.getEmpleados();
           });
@@ -415,5 +472,93 @@ export class EmpleadosComponent implements OnInit {
     cancelarexcel(){
       this.toOpenAddEmpleadoBool = true;
     }
+
+    // Derecheos *************************************************************************
+
+    // tslint:disable-next-line: typedef
+    modDerecho(){
+    this.refreshDerechos();
+    this.derechosService.getDerechos().subscribe((data) => {
+    this.derechos = data.filter((x) => x.idEmpleado === this.empleado.idEmpleado);
+    console.log(this.derechos);
+    });
+    }
+
+    // tslint:disable-next-line: typedef
+    abirAregarDerecho(){
+      this.toOpenAddDerechosBool = true;
+      this.toOpenEditDerechosBool = false;
+      this.btnAgregarDrecho = false;
+    }
+
+    // tslint:disable-next-line: typedef
+    abirEditDerecho(derecho){
+
+      this.EDereidDerecho = derecho.idDerecho;
+      this.EDereidServicio = derecho.idServicio;
+      this.EDereidEmpleado = derecho.idEmpleado;
+      this.EDerenumeroServicios = derecho.numeroServicios;
+
+      this.toOpenEditDerechosBool = true;
+      this.toOpenAddDerechosBool = false;
+      this.btnAgregarDrecho = true;
+    }
+
+    // tslint:disable-next-line: typedef
+    refreshDerechos(){
+      this.btnAgregarDrecho = true;
+      this.toOpenAddDerechosBool = false;
+      this.toOpenEditDerechosBool = false;
+    }
+
+    // tslint:disable-next-line: typedef
+    agrearDerecho(){
+      console.error(this.DereidServicio,"this.DereidServiciothis.DereidServicio");
+      console.log(this.derechosServi, 'this.derechosServi');
+      if (this.derechosServi.length === 0){
+      this.derechosService.createDerecho({
+        idDerecho: this.DereidDerecho,
+        idServicio: this.DereidServicio,
+        idEmpleado: this.empleado.idEmpleado,
+        numeroServicios: this.DerenumeroServicios
+      }).subscribe((data) => {
+        this.editEmpleado(this.empleado.idEmpleado);
+        this.refreshDerechos();
+        this.modDerecho();
+      });
+      }
+
+    }
+
+    // tslint:disable-next-line: typedef
+    editarDerecho(){
+      console.log(this.EDereidDerecho, this.EDereidServicio, this.EDereidEmpleado, this.EDerenumeroServicios);
+      this.derechosService.editDerecho({
+        idDerecho: this.EDereidDerecho,
+        idServicio: this.EDereidServicio,
+        idEmpleado: this.EDereidEmpleado,
+        numeroServicios: this.EDerenumeroServicios
+      }).subscribe((data) => {
+        this.refreshDerechos();
+        this.modDerecho();
+      });
+    }
+
+    // tslint:disable-next-line: typedef
+    deleteDerecho(){
+    this.derechosService.deleteDerecho(this.idDelete).subscribe(()=>{
+    });
+    }
+
+      // tslint:disable-next-line: typedef
+    delteID(derecho) {
+      this.idDelete = derecho.idDerecho;
+    }
+
+    // tslint:disable-next-line: typedef
+    selectServicio(DereidServicio){
+      this.derechosServi = this.derechos.filter((x) => x.idServicio == DereidServicio);
+    }
+
 
   }

@@ -4,6 +4,7 @@ import { Empleados } from '../../shared/models/empleados.model';
 import { SubServicios } from './../../shared/models/subServicios.model';
 import { Reportes } from './../../shared/models/reportes.model';
 import { Derechos } from './../../shared/models/derechos.model';
+import { Servicios } from './../../shared/models/servicios.model';
 
 import { SubServicuiosService } from './../../shared/services/1subServicios.service/sub-servicuios.service';
 import { EmpleadosService } from './../../shared/services/1empleados.service/empleados.service';
@@ -54,8 +55,8 @@ export class SubServiciosComponent implements OnInit {
   idReportes: number;
 
   // Ticket
-  servicio: SubServicios;
-  servicios: SubServicios[];
+  servicio: Servicios;
+  servicios: Servicios[];
   saludo: string;
 
   // Derechos
@@ -75,7 +76,9 @@ export class SubServiciosComponent implements OnInit {
 
     this.serviciosService.getServicios().subscribe((data) => {
       this.servicios = data;
-      // console.log(data);
+      // tslint:disable-next-line: triple-equals
+      this.servicio = this.servicios.find((x) => x.idServicio == this.idServicio);
+    // console.log(this.servicio, 'this.servicio,this.servicio');
     });
 
     this.derechosService.getDerechos().subscribe((data) => {
@@ -101,11 +104,9 @@ export class SubServiciosComponent implements OnInit {
 
   // tslint:disable-next-line: typedef
   checkEmployee(cardEmployee) {
+    this.cardEmployee = cardEmployee;
     // this.sericeRecord.getRecords().subscribe((data) =>){
     // }
-    // tslint:disable-next-line: triple-equals
-    this.servicio = this.servicios.find((x) => x.idServicio == this.idServicio);
-    // console.log(this.servicio, 'this.servicio,this.servicio');
     // tslint:disable-next-line: triple-equals
     this.Employee = this.Employees.find((x) => x.credencial == cardEmployee);
 
@@ -115,89 +116,115 @@ export class SubServiciosComponent implements OnInit {
       this.idEmployee = this.Employee.idEmpleado;
       // Busca y selecciona los derechos del usuario o empleado encontrado para poder asignarselo en el
       // this.numeroServicios
-      this.derecho = this.derechos.find((x) => x.idEmpleado === this.idEmployee);
+      // tslint:disable-next-line: triple-equals
+      this.derecho = this.derechos.find((x) => x.idEmpleado === this.idEmployee && x.idServicio == this.idServicio);
 
-      this.numeroServicios = this.derecho.numeroServicios;
+      // tslint:disable-next-line: triple-equals
+      if (this.derecho != undefined) {
+        console.log(this.derecho, 'this.derecho');
+        this.numeroServicios = this.derecho.numeroServicios;
 
-      // -----------------------------------------------------
+        // -----------------------------------------------------
 
-      this.reporteNew = this.reportes.filter((elements) => { });
-      this.reportes.forEach((element, i) => {
+        this.reporteNew = this.reportes.filter(element => element.idServicio === this.idServicio);
+        console.log(this.reporteNew, 'this.reporteNew');
+        this.reportes.forEach((element, i) => {
 
-           // tslint:disable-next-line: triple-equals
-        if (element.idEmpleado == this.idEmployee) {
-          // Tipo de emleado a filtrar recolocar para el check del filtrado
+          // tslint:disable-next-line: triple-equals
+          if (element.idEmpleado == this.idEmployee) {
+            // Tipo de emleado a filtrar recolocar para el check del filtrado
 
-          const date: Date = new Date();
-          let mes: number;
-          // console.log(date.getDate(), date.getMonth() + 1, date.getFullYear());
-          this.fecha = new Date(element.fechaDate);
-          mes = date.getMonth() + 1;
-          // this.fechaStr = (date.getFullYear() + '-' + mes + '-' + date.getDate());
-          this.fechaHoy = new Date(date.getFullYear() + '-' + mes + '-' + date.getDate());
-          console.log(this.fecha, '----------', this.fechaHoy);
-          // Valida que el egistro dea del dia de hoy para poder der contemplado o tomado en cuenta dentro del PUSH
-          // tslint:disable-next-line: max-line-length
-          if ( this.fecha.getDate() === this.fechaHoy.getDate() && this.fecha.getMonth() === this.fechaHoy.getMonth() && this.fecha.getFullYear() === this.fechaHoy.getFullYear()){
-            this.reporteNew.push(element);
-            this.contadorRecordsNew = this.reporteNew.length;
-            console.log(this.reporteNew.length, 'this.recordsNew.length');
+            const date: Date = new Date();
+            let mes: number;
+            // console.log(date.getDate(), date.getMonth() + 1, date.getFullYear());
+            this.fecha = new Date(element.fechaDate);
+            mes = date.getMonth() + 1;
+            // this.fechaStr = (date.getFullYear() + '-' + mes + '-' + date.getDate());
+            this.fechaHoy = new Date(date.getFullYear() + '-' + mes + '-' + date.getDate());
+            console.log(this.fecha, '----------', this.fechaHoy);
+            // Valida que el egistro dea del dia de hoy para poder der contemplado o tomado en cuenta dentro del PUSH
+            // tslint:disable-next-line: max-line-length
+            if (this.fecha.getDate() === this.fechaHoy.getDate() && this.fecha.getMonth() === this.fechaHoy.getMonth() && this.fecha.getFullYear() === this.fechaHoy.getFullYear()) {
+
+              // tslint:disable-next-line: triple-equals
+              if (element.idServicio == this.idServicio) {
+                this.reporteNew.push(element);
+                this.contadorRecordsNew = this.reporteNew.length;
+                console.log(this.reporteNew.length, 'this.recordsNew.length');
+                console.log(this.reporteNew.length, 'this.recordsNew.length', this.reporteNew, 'this.recordsNew.push(element);');
+              }
+
+            }
+
+
           }
 
 
-        }
+          if (this.reportes.length === i + 1) {
 
+            console.log(this.numeroServicios, 'this.numeroServicios', this.contadorRecordsNew, 'this.recordsNew.length + 1');
 
-        if (this.reportes.length === i + 1) {
-
-          console.log(this.numeroServicios, 'this.numeroServicios', this.contadorRecordsNew, 'this.recordsNew.length + 1');
-
-          // tslint:disable-next-line: no-conditional-assignment
-          if (this.numeroServicios > this.contadorRecordsNew) {
             // tslint:disable-next-line: no-conditional-assignment
-            this.estatusEmployee = 'Acceso Correcto';
-            this.nameEmployee = this.Employee.nombres + this.Employee.apellidos;
-            this.saludo = 'Bienvenido';
-            this.opcion = true;
+            if (this.numeroServicios > this.contadorRecordsNew) {
+              // tslint:disable-next-line: no-conditional-assignment
+              this.estatusEmployee = 'Acceso Correcto';
+              this.nameEmployee = this.Employee.nombres + ' ' + this.Employee.apellidos;
+              this.saludo = 'Bienvenido';
+              this.opcion = true;
 
-            // 77777777777777777777777777777777777777777777777777777777777777777777777
-            this.newSubServicios = [];
-            this.subServicuiosService.getSubServicios().subscribe((data) => {
-              this.subServicios = data;
-              // tslint:disable-next-line: no-shadowed-variable
-              this.subServicios.forEach(element => {
+              // 77777777777777777777777777777777777777777777777777777777777777777777777
+              this.newSubServicios = [];
+              this.subServicuiosService.getSubServicios().subscribe((data) => {
+                this.subServicios = data;
+                // tslint:disable-next-line: no-shadowed-variable
+                this.subServicios.forEach(element => {
 
-                // tslint:disable-next-line: triple-equals
-                if (element.idServicio == this.idServicio) {
-                  this.subServicio = element;
-                  // console.log(this.subServicio, 'this.subServicio');
-                  this.newSubServicios.push(this.subServicio);
-                  // console.log(this.newSubServicios, 'this.newSubServicios');
-                }
+                  // tslint:disable-next-line: triple-equals
+                  if (element.idServicio == this.idServicio) {
+                    this.subServicio = element;
+                    // console.log(this.subServicio, 'this.subServicio');
+                    this.newSubServicios.push(this.subServicio);
+                    // console.log(this.newSubServicios, 'this.newSubServicios');
+                  }
 
+                });
+
+                // console.log(this.subServicio, 'Aqui esta el numero de subServicios');
               });
+              // 77777777777777777777777777777777777777777777777777777777777777777777777
 
-              // console.log(this.subServicio, 'Aqui esta el numero de subServicios');
-            });
-            // 77777777777777777777777777777777777777777777777777777777777777777777777
-
-          } else {
-            this.opcion = false;
-            this.estatusEmployee = 'Sin Acceso';
-            this.nameEmployee = 'Usuario no registrado';
-            $('.toast').toast('show');
-            this.cardEmployee = null;
-            this.saludo = 'Sin Usuario';
-            this.printError();
+            } else {
+              this.opcion = false;
+              this.estatusEmployee = 'Usuario exedio el numero de servicios disponibles por hoy de ' + this.numeroServicios;
+              this.nameEmployee = this.Employee.nombres + ' ' + this.Employee.apellidos;
+              $('.toast').toast('show');
+              this.saludo = 'Servicio consumido ';
+              this.printError();
+            }
           }
-        }
 
 
-      });
+        });
+
+      } else {
+        this.opcion = false;
+        this.estatusEmployee = 'Usuario sin derecho para este servicio';
+        this.nameEmployee = this.Employee.nombres + ' ' + this.Employee.apellidos;
+        $('.toast').toast('show');
+        this.saludo = 'Verificar derechos con Admin';
+        this.printError();
+      }
 
       // -----------------------------------------------------
 
       // end if nuero de servicios
+    } else {
+      this.opcion = false;
+      this.estatusEmployee = 'Sin Usuario';
+      this.nameEmployee = 'Usuario no registrado tarjeta no encontrada';
+      $('.toast').toast('show');
+      this.saludo = 'Sin Usuario';
+      this.printError();
     }
   }
 
@@ -205,7 +232,6 @@ export class SubServiciosComponent implements OnInit {
   getRecors() {
     this.reportesService.getReportes().subscribe((data) => {
       this.reportes = data;
-
       this.idReportes = this.reportes.length + 1;
     });
 
@@ -239,12 +265,11 @@ export class SubServiciosComponent implements OnInit {
 
 
   // tslint:disable-next-line: typedef
-  selectSubServicio(selctSubServicio){
+  selectSubServicio(selctSubServicio) {
     this.selctSubServicio = selctSubServicio;
     // console.log(this.selctSubServicio);
     $('.toast').toast('show'); // Esto se tiene que cambiar al fnal de todo
     this.addRecord(); // Esto se tiene que cambiar al fnal de todo
-    this.cardEmployee = null; // Esto se tiene que cambiar al fnal de todo
     this.print(); // Esto se tiene que cambiar al fnal de todo
   }
 
@@ -254,43 +279,29 @@ export class SubServiciosComponent implements OnInit {
     $('.toast').toast('dispose');
   }
 
+  // tslint:disable-next-line: typedef
+  refresh(){
+    this.opcion = false;
+    this.cardEmployee = null;
+  }
 
   // tslint:disable-next-line: typedef
   print() {
     this.saludo = 'Bienvenido';
     const date: Date = new Date();
     const mywindow = window.open('', 'PRINT', 'height=400,width=600');
-    mywindow.document.write('<h3>.</h3>');
-    mywindow.document.write(
-      '<h3>Servicio: ' + this.selctSubServicio.nombreSubServicio + '</h3>'
-    );
+    mywindow.document.write('<p>.</p>');
+    mywindow.document.write('<p>Servicio: ' + this.servicio.nombreServicio + ': ' + this.selctSubServicio.nombreSubServicio + '</p>');
     // tslint:disable-next-line: max-line-length
-    mywindow.document.write(
-      '<h3>Fecha: ' +
-      date.toLocaleString('en-US', {
-        day: '2-digit',
-        month: '2-digit',
-        year: '2-digit',
-        hour: 'numeric',
-        minute: 'numeric',
-        second: 'numeric',
-        hour12: true,
-      }) +
-      '</h3>'
-    );
+    mywindow.document.write('<h3>Fecha: ' + date.toLocaleString('en-US', { day: '2-digit', month: '2-digit', year: '2-digit', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true, }) + '</h3>');
     mywindow.document.write('<p>Tiket: ' + this.idReportes + '</p>');
-    mywindow.document.write(
-      '<p>Tarjeta: ' +
-      this.Employee.credencial +
-      ' Empleado: ' +
-      this.Employee.nombres +
-      '</p>'
-    );
+    mywindow.document.write('<p>Tarjeta: ' + this.Employee.credencial + '</p>');
+    mywindow.document.write('<p>Empleado: ' + this.Employee.nombres + '</p>');
     mywindow.document.write('<p>Bienvenido...: ' + 'Buen Provecho!!!' + '</p>');
     mywindow.document.close(); // necesario para IE >= 10 this.idRecords
     mywindow.print();
     mywindow.close();
-    this.opcion = false;
+    this.refresh();
   }
 
   // tslint:disable-next-line: typedef
@@ -299,31 +310,17 @@ export class SubServiciosComponent implements OnInit {
     const mywindow = window.open('', 'PRINT', 'height=400,width=600');
     mywindow.document.write('<h3>.</h3>');
     mywindow.document.write('<h2>ERROR DE ACCESO !! </h2>');
-    mywindow.document.write(
-      '<h3>Tipo de error: ' + 'Mas de un registro' + '</h3>'
-    );
+    mywindow.document.write('<p>Servicio: ' + this.servicio.nombreServicio + '</p>');
+    mywindow.document.write('<h3>Tipo de error: ' + this.estatusEmployee + '</h3>');
     // tslint:disable-next-line: max-line-length
-    mywindow.document.write(
-      '<p>Fecha: ' +
-      date.toLocaleString('en-US', {
-        day: '2-digit',
-        month: '2-digit',
-        year: '2-digit',
-        hour: 'numeric',
-        minute: 'numeric',
-        second: 'numeric',
-        hour12: true,
-      }) +
-      '</p>'
-    );
-    mywindow.document.write(
-      '<p>Usuario ya registrado por hoy' + this.cardEmployee + '</p>'
-    );
+    mywindow.document.write('<p>Fecha: ' + date.toLocaleString('en-US', { day: '2-digit', month: '2-digit', year: '2-digit', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true, }) + '</p>');
+    mywindow.document.write('<p>Tarjeta: ' + this.cardEmployee + '</p>');
     mywindow.document.write('<p>Empleado: ' + this.nameEmployee + '</p>');
+    mywindow.document.write('<p>Detalle: ' + this.saludo + '</p>');
     mywindow.document.close(); // necesario para IE >= 10 this.idRecords
     mywindow.print();
     mywindow.close();
-    this.opcion = false;
+    this.refresh();
   }
 
 }

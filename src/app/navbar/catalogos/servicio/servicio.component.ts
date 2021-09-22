@@ -5,7 +5,6 @@ import { SubServicuiosService } from './../../../shared/services/1subServicios.s
 
 import { SubServicios } from './../../../shared/models/subServicios.model';
 import { Servicios } from './../../../shared/models/servicios.model';
-import { threadId } from 'worker_threads';
 
 @Component({
   selector: 'app-servicio',

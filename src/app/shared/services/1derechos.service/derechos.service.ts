@@ -26,7 +26,7 @@ export class DerechosService {
   }
 
   editDerecho(derecho: Derechos): Observable<any>{
-    return this.http.put(this.rootURL + '/C1Derechos/' + derecho.idServicio, derecho);
+    return this.http.put(this.rootURL + '/C1Derechos/' + derecho.idDerecho, derecho);
   }
 
   deleteDerecho(id): Observable<any>{
