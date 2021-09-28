@@ -40,11 +40,14 @@ export class EmpleadosComponent implements OnInit {
   // variables servicios ***********************************************
   servicios: Servicios[];
   idServicio: number;
+  servicio: Servicios;
 
   // Variables de Derechos ****************************************************
   derechos: Derechos[];
   derechosServi: Derechos[];
   derecho: Derechos;
+  newDerechoAny: any;
+  newDerechosAny: any[];
   derechoEstatus = false;
   idDelete: number;
 
@@ -131,10 +134,8 @@ export class EmpleadosComponent implements OnInit {
 
 
   ngOnInit(): void {
-    // this.service.getUsersId(1).subscribe(data => {
-    //   console.log(data);
-    // });
-    this.serviciosService.getServicios().subscribe((data)=>{
+    this.newDerechosAny = [];
+    this.serviciosService.getServicios().subscribe((data) => {
     this.servicios = data;
     });
 
@@ -317,9 +318,6 @@ export class EmpleadosComponent implements OnInit {
       this.EdelegacionMunicipio = this.empleado.delegacionMunicipio;
       this.Ecp = this.empleado.cp;
 
-
-      // tslint:disable-next-line: no-conditional-assignment
-      console.log(this.empleado, 'Click');
     }else{
       console.log(this.empleado, 'Error');
     }
@@ -480,7 +478,26 @@ export class EmpleadosComponent implements OnInit {
     this.refreshDerechos();
     this.derechosService.getDerechos().subscribe((data) => {
     this.derechos = data.filter((x) => x.idEmpleado === this.empleado.idEmpleado);
-    console.log(this.derechos);
+    this.derechos.forEach(derecho => {
+    // tslint:disable-next-line: triple-equals
+    this.servicio = this.servicios.find(x => x.idServicio == derecho.idServicio);
+
+    if (this.servicio !== undefined && this.servicio !== null){
+      this.newDerechoAny = {
+      idDerecho: derecho.idDerecho,
+      servicioName: this.servicio.nombreServicio,
+      idEmpleado: this.empleado.nombres,
+      numeroServicios: derecho.numeroServicios
+      };
+
+      if (this.newDerechoAny.servicioName !== undefined && this.newDerechoAny.servicioName !== null){
+
+        this.newDerechosAny.push(this.newDerechoAny);
+      }
+    }
+
+    });
+
     });
     }
 
@@ -513,8 +530,6 @@ export class EmpleadosComponent implements OnInit {
 
     // tslint:disable-next-line: typedef
     agrearDerecho(){
-      console.error(this.DereidServicio,"this.DereidServiciothis.DereidServicio");
-      console.log(this.derechosServi, 'this.derechosServi');
       if (this.derechosServi.length === 0){
       this.derechosService.createDerecho({
         idDerecho: this.DereidDerecho,
@@ -546,7 +561,7 @@ export class EmpleadosComponent implements OnInit {
 
     // tslint:disable-next-line: typedef
     deleteDerecho(){
-    this.derechosService.deleteDerecho(this.idDelete).subscribe(()=>{
+    this.derechosService.deleteDerecho(this.idDelete).subscribe(() => {
     });
     }
 
@@ -557,6 +572,7 @@ export class EmpleadosComponent implements OnInit {
 
     // tslint:disable-next-line: typedef
     selectServicio(DereidServicio){
+      // tslint:disable-next-line: triple-equals
       this.derechosServi = this.derechos.filter((x) => x.idServicio == DereidServicio);
     }
 

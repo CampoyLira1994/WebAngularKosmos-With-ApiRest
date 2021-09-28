@@ -498,7 +498,9 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let derecho of this.derechos">
+                  <tr *ngFor="let derecho of this.newDerechosAny">
+                  <!-- , let servicio of this.servicios esto iva dentro de l aetiqueta tr pero termian viendose mal la tabla por eso es sustituida por los valores taratdos desde ts para mostrar rn tabla-->
+
                     <th scope="row">
 
                       <!-- Button trigger modal -->
@@ -558,10 +560,13 @@
                     </th>
                     <td>{{ derecho.idDerecho }}</td>
                     <td>{{ derecho.idEmpleado }}</td>
+                    <td>{{ derecho.servicioName }}</td>
 
-
-                    <td>{{ derecho.idServicio }}</td>
-                    <!-- <td>
+                    <!-- Mostraban el nobre en ves de id esto fui sustituido y tratado los datos desde ts para mostrar en tabla -->
+                    <!-- <div *ngFor="let servicio of this.servicios " >
+                    <td style="text-align:right" *ngIf="derecho.idServicio === servicio.idServicio" >{{ servicio.nombreServicio }}</td>
+                    </div>
+                    <td>
                       <select readonly>
                       <option *ngFor="let servicio of this.servicios" class="dropdown-item" value="{{ derecho.idServicio }}">
                         {{ servicio.nombreServicio }}
